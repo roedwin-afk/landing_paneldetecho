@@ -1,0 +1,148 @@
+---
+import { Image } from "astro:assets";
+
+import naveIndustrial from "../assets/nave-industrial-panel-techo.jpg";
+import bodegaComercial from "../assets/bodega-comercial-panel-techo.webp";
+import edificioOficinas from "../assets/edificio-oficinas-panel-techo.webp";
+import estructuraAgro from "../assets/estructura-agroindustrial-panel-techo.webp";
+
+const aplicaciones = [
+  {
+    imagen: naveIndustrial,
+    titulo: "Naves industriales",
+    texto: "Techos de gran superficie para plantas de manufactura y producción."
+  },
+  {
+    imagen: bodegaComercial,
+    titulo: "Bodegas y logística",
+    texto: "Soluciones de techo para centros de distribución y almacenamiento."
+  },
+  {
+    imagen: edificioOficinas,
+    titulo: "Edificios comerciales",
+    texto: "Aislamiento térmico y acústico para oficinas y centros comerciales."
+  },
+  {
+    imagen: estructuraAgro,
+    titulo: "Agroindustria",
+    texto: "Techos resistentes para galpones, silos y estructuras de campo."
+  }
+];
+---
+
+<section class="aplicaciones reveal" id="aplicaciones">
+  <div class="aplicaciones__wrapper">
+    <h2 class="aplicaciones__titulo">Aplicaciones</h2>
+    <p class="aplicaciones__sub">Soluciones de techo para cada sector industrial</p>
+    <div class="aplicaciones__grid">
+      {aplicaciones.map((a) => (
+        <div class="aplicaciones__card">
+          <Image
+            src={a.imagen}
+            alt={a.titulo}
+            width={300}
+            height={200}
+            class="aplicaciones__img"
+            format="webp"
+            quality={80}
+          />
+          <div class="aplicaciones__info">
+            <h3 class="aplicaciones__nombre">{a.titulo}</h3>
+            <p class="aplicaciones__texto">{a.texto}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .aplicaciones {
+    padding: 5rem 2rem;
+    background-color: #F5F5F0;
+  }
+
+  .aplicaciones__wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .aplicaciones__titulo {
+    text-align: center;
+    color: var(--color-primary);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .aplicaciones__sub {
+    text-align: center;
+    color: #777;
+    font-size: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .aplicaciones__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .aplicaciones__card {
+    background: var(--color-white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease;
+  }
+
+  .aplicaciones__card:hover {
+    transform: translateY(-5px);
+  }
+
+  .aplicaciones__img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .aplicaciones__info {
+    padding: 1.25rem;
+  }
+
+  .aplicaciones__nombre {
+    color: var(--color-primary);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .aplicaciones__texto {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .aplicaciones__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .aplicaciones__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

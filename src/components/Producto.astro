@@ -1,0 +1,140 @@
+---
+import { Image } from "astro:assets";
+import panelTecho from "../assets/panel-sandwich-techo-industrial.webp";
+
+const atributos = [
+  "Conductividad térmica desde 0.022 W/mK",
+  "Espesores disponibles de 40mm a 150mm",
+  "Revestimiento de acero galvanizado prepintado",
+  "Resistencia al viento y cargas de nieve",
+  "Instalación rápida con sistema de ensamble",
+  "Disponible en múltiples colores y acabados"
+];
+---
+
+<section class="producto reveal" id="producto">
+  <div class="producto__wrapper">
+    <div class="producto__media">
+      <Image
+        src={panelTecho}
+        alt="Panel sándwich para techo industrial"
+        width={580}
+        height={420}
+        class="producto__img"
+        format="webp"
+        quality={85}
+      />
+    </div>
+    <div class="producto__info">
+      <span class="producto__tag">Nuestro producto</span>
+      <h2 class="producto__titulo">
+        Panel Sándwich para Techo — Solución Completa de Aislamiento
+      </h2>
+      <p class="producto__desc">
+        Fabricado con núcleo de poliuretano de alta densidad y revestimiento 
+        metálico galvanizado. Diseñado para techos de naves industriales, 
+        bodegas, edificios comerciales y estructuras agroindustriales.
+      </p>
+      <ul class="producto__lista">
+        {atributos.map((a) => (
+          <li class="producto__item">
+            <span class="producto__check">✓</span>
+            {a}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .producto {
+    padding: 5rem 2rem;
+    background-color: var(--color-white);
+  }
+
+  .producto__wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .producto__img {
+    border-radius: 8px;
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+  }
+
+  .producto__tag {
+    display: inline-block;
+    background-color: #EAF0E4;
+    color: var(--color-primary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .producto__titulo {
+    color: var(--color-primary);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 1.25rem;
+  }
+
+  .producto__desc {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+  }
+
+  .producto__lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .producto__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  .producto__check {
+    color: var(--color-accent);
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .producto__wrapper {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

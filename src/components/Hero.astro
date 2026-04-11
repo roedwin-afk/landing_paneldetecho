@@ -1,0 +1,125 @@
+---
+import { Image } from "astro:assets";
+import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-sol.webp";
+---
+
+<section class="hero">
+  <div class="hero__wrapper">
+    <div class="hero__text">
+      <span class="hero__tag">Soluciones para techos industriales</span>
+      <h1 class="hero__title">
+        Panel de Techo — Aislamiento Térmico para Naves y Edificios
+      </h1>
+      <p class="hero__sub">
+        Venta de paneles sándwich para techos industriales. Alta resistencia, 
+        instalación rápida y eficiencia térmica garantizada. 
+        Cobertura en El Salvador y Centroamérica.
+      </p>
+      <a href="/contacto/" class="hero__btn">Solicitar cotización →</a>
+    </div>
+    <div class="hero__media">
+      <Image
+        src={heroPanelTecho}
+        alt="Panel de techo industrial para naves y edificios"
+        width={600}
+        height={420}
+        loading="eager"
+        class="hero__img"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background-color: var(--color-primary);
+    padding: 5rem 2rem;
+    min-height: 520px;
+  }
+
+  .hero__wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero__tag {
+    display: inline-block;
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .hero__title {
+    color: var(--color-white);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero__sub {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .hero__btn {
+    display: inline-block;
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    padding: 0.9rem 2rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: opacity 0.2s;
+  }
+
+  .hero__btn:hover {
+    opacity: 0.9;
+  }
+
+  .hero__img {
+    border-radius: 8px;
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 3rem 1.5rem;
+      min-height: auto;
+    }
+
+    .hero__wrapper {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .hero__title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
