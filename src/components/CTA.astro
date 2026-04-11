@@ -1,23 +1,28 @@
 ---
 ---
 
-<section class="cta fade-in" id="contacto">
-  <div class="cta__container">
-    <h2 class="cta__titulo">¿Listo para optimizar tu cuarto frío?</h2>
-    <p class="cta__texto">Cuéntanos tu proyecto y un especialista te contactará con una propuesta técnica personalizada.</p>
-    <a href="/contacto" class="cta__btn">Solicitar cotización gratuita →</a>
+<section class="cta reveal" id="contacto">
+  <div class="cta__wrapper">
+    <div class="cta__content">
+      <h2 class="cta__titulo">¿Listo para cubrir tu proyecto?</h2>
+      <p class="cta__texto">
+        Cuéntanos las dimensiones y características de tu techo. 
+        Un especialista te contactará con una propuesta técnica y de precio personalizada.
+      </p>
+      <a href="#formulario" class="cta__btn">Solicitar cotización gratuita →</a>
+    </div>
   </div>
 </section>
 
 <style>
   .cta {
-    background-color: var(--color-primary);
     padding: 5rem 2rem;
+    background-color: #1E3314;
     text-align: center;
   }
 
-  .cta__container {
-    max-width: 700px;
+  .cta__wrapper {
+    max-width: 750px;
     margin: 0 auto;
   }
 
@@ -48,5 +53,26 @@
 
   .cta__btn:hover {
     opacity: 0.9;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .cta__titulo {
+      font-size: 1.5rem;
+    }
+
+    .cta__texto {
+      font-size: 1rem;
+    }
   }
 </style>
