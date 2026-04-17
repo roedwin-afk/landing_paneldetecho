@@ -1,140 +1,444 @@
 ---
 import { Image } from "astro:assets";
+import {
+  Check,
+  Thermometer,
+  ShieldCheck,
+  Wind,
+  Layers3,
+  Droplets,
+} from "lucide-astro";
 import panelTecho from "../assets/panel-sandwich-techo-industrial.webp";
 
-const atributos = [
-  "Conductividad térmica desde 0.022 W/mK",
-  "Espesores disponibles de 40mm a 150mm",
-  "Revestimiento de acero galvanizado prepintado",
-  "Resistencia al viento y cargas de nieve",
-  "Instalación rápida con sistema de ensamble",
-  "Disponible en múltiples colores y acabados"
+const ventajas = [
+  "Aislamiento térmico eficiente para cubiertas expuestas a alta radiación solar.",
+  "Juntas diseñadas para mejorar la estanqueidad y reducir filtraciones de aire y humedad.",
+  "Sistema prefabricado que acelera la instalación y reduce tiempos en obra.",
+  "Buena respuesta frente a intemperie, viento y exigencia de uso industrial.",
+  "Disponible en distintos perfiles, espesores y acabados según el proyecto.",
+  "Solución integral para naves, bodegas, centros logísticos y edificios comerciales.",
+];
+
+const datos = [
+  {
+    icon: Thermometer,
+    label: "Desempeño",
+    value: "Aislamiento térmico",
+  },
+  {
+    icon: Droplets,
+    label: "Protección",
+    value: "Barrera ante humedad",
+  },
+  {
+    icon: Wind,
+    label: "Cubierta",
+    value: "Uso industrial exterior",
+  },
+  {
+    icon: Layers3,
+    label: "Sistema",
+    value: "Panel prefabricado",
+  },
+  {
+    icon: ShieldCheck,
+    label: "Proyecto",
+    value: "Durabilidad y control",
+  },
 ];
 ---
 
-<section class="producto reveal" id="producto">
-  <div class="producto__wrapper">
-    <div class="producto__media">
-      <Image
-        src={panelTecho}
-        alt="Panel sándwich para techo industrial"
-        width={580}
-        height={420}
-        class="producto__img"
-        format="webp"
-        quality={85}
-      />
-    </div>
-    <div class="producto__info">
-      <span class="producto__tag">Nuestro producto</span>
-      <h2 class="producto__titulo">
-        Panel Sándwich para Techo — Solución Completa de Aislamiento
+<section class="producto section reveal" id="soluciones">
+  <div class="producto__container container">
+    <div class="producto__header">
+      <div class="section-label">Sistema de cubierta</div>
+      <h2 class="section-title producto__title">
+        Panel sándwich para techo.<br />
+        Aislamiento, rapidez y protección para obra industrial.
       </h2>
-      <p class="producto__desc">
-        Fabricado con núcleo de poliuretano de alta densidad y revestimiento 
-        metálico galvanizado. Diseñado para techos de naves industriales, 
-        bodegas, edificios comerciales y estructuras agroindustriales.
+      <p class="section-text producto__intro">
+        El panel de techo es una solución constructiva prefabricada para
+        cubiertas que combina aislamiento, protección frente a la intemperie y
+        una instalación más ágil en obra. Está pensado para proyectos que
+        necesitan controlar la temperatura interior, mejorar el desempeño de la
+        envolvente y mantener una imagen técnica y profesional en la cubierta.
       </p>
-      <ul class="producto__lista">
-        {atributos.map((a) => (
-          <li class="producto__item">
-            <span class="producto__check">✓</span>
-            {a}
-          </li>
-        ))}
-      </ul>
+    </div>
+
+    <div class="producto__grid">
+      <div class="producto__media">
+        <div class="producto__image-wrap">
+          <Image
+            src={panelTecho}
+            alt="Panel sándwich para techo industrial instalado en cubierta"
+            width={760}
+            height={560}
+            class="producto__img"
+            format="webp"
+            quality={85}
+          />
+        </div>
+
+        <div class="producto__floating-card">
+          <span class="producto__floating-label">Aplicación principal</span>
+          <strong class="producto__floating-value"
+            >Cubiertas industriales</strong
+          >
+        </div>
+      </div>
+
+      <div class="producto__content">
+        <div class="producto__spec-block">
+          <div class="producto__spec-top">
+            <span class="producto__spec-kicker">Solución técnica</span>
+            <h3 class="producto__spec-title">
+              Una cubierta más eficiente desde la instalación hasta la
+              operación.
+            </h3>
+          </div>
+
+          <p class="producto__desc">
+            Este sistema de panel para techo ayuda a reducir la ganancia
+            térmica, aporta una mejor barrera frente al clima y simplifica el
+            montaje al llegar como componente prefabricado. Por eso es una
+            opción práctica para arquitectos, ingenieros civiles y propietarios
+            que buscan rapidez de ejecución, menor complejidad en obra y una
+            cubierta con mejor desempeño integral.
+          </p>
+
+          <div class="producto__data-grid">
+            {
+              datos.map(({ icon: Icon, label, value }) => (
+                <div class="producto__data-card">
+                  <div class="producto__data-copy">
+                    <Icon
+                      class="producto__data-icon"
+                      size={18}
+                      stroke-width={1.8}
+                    />
+                    <span>{label}</span>
+                    <strong>{value}</strong>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+
+          <ul class="producto__lista">
+            {
+              ventajas.map((ventaja) => (
+                <li class="producto__item">
+                  <span class="producto__icon-wrap">
+                    <Check
+                      class="producto__check"
+                      size={16}
+                      stroke-width={2.4}
+                    />
+                  </span>
+                  <span>{ventaja}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="producto__actions">
+            <a href="/contacto/" class="btn-primary producto__btn">
+              Solicitar cotización
+            </a>
+
+            <a href="#aplicaciones" class="btn-ghost producto__btn">
+              Ver aplicaciones
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .producto {
-    padding: 5rem 2rem;
-    background-color: var(--color-white);
+    background: var(--color-surface);
   }
 
-  .producto__wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
+  .producto__container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .producto__header {
+    max-width: 880px;
+  }
+
+  .producto__title {
+    margin-bottom: 1.25rem;
+    max-width: 920px;
+  }
+
+  .producto__intro {
+    max-width: 760px;
+  }
+
+  .producto__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .producto__media {
+    position: relative;
+    height: 100%;
+  }
+
+  .producto__image-wrap {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    background: #f3f1ec;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .producto__image-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(14, 16, 18, 0.02),
+      rgba(14, 16, 18, 0.12)
+    );
+    pointer-events: none;
+    z-index: 1;
   }
 
   .producto__img {
-    border-radius: 8px;
     width: 100%;
-    height: 420px;
-    object-fit: cover;
+    height: 100%;
+    min-height: 540px;
+    object-fit: fill;
   }
 
-  .producto__tag {
-    display: inline-block;
-    background-color: #EAF0E4;
-    color: var(--color-primary);
-    font-size: 0.8rem;
+  .producto__floating-card {
+    position: absolute;
+    left: 1.25rem;
+    bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1rem 1.1rem;
+    background: rgba(14, 16, 18, 0.94);
+    border-left: 3px solid var(--color-accent);
+    box-shadow: 0 18px 34px rgba(14, 16, 18, 0.18);
+  }
+
+  .producto__floating-label {
+    font-family: var(--font-heading);
+    font-size: 0.68rem;
     font-weight: 700;
-    padding: 0.3rem 0.85rem;
-    border-radius: 20px;
-    margin-bottom: 1rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
   }
 
-  .producto__titulo {
-    color: var(--color-primary);
-    font-size: 1.6rem;
-    font-weight: 700;
-    line-height: 1.3;
+  .producto__floating-value {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--color-white);
+    line-height: 1;
+  }
+
+  .producto__content {
+    display: flex;
+    height: 100%;
+  }
+
+  .producto__spec-block {
+    width: 100%;
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f3 100%);
+  }
+
+  .producto__spec-top {
     margin-bottom: 1.25rem;
   }
 
+  .producto__spec-kicker {
+    display: inline-flex;
+    margin-bottom: 0.8rem;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .producto__spec-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
   .producto__desc {
-    color: #555;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-soft);
+    line-height: 1.8;
     font-size: 1rem;
-    line-height: 1.7;
-    margin-bottom: 1.75rem;
+  }
+
+  .producto__data-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .producto__data-card {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+    padding: 0.95rem 0.5rem;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+  }
+
+  .producto__data-icon {
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .producto__data-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: center;  
+    justify-content: center; 
+    text-align: center;
+  }
+
+  .producto__data-copy span {
+    font-size: 0.62rem;
+    line-height: 1.4;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
+
+  .producto__data-copy strong {
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: var(--color-primary);
+    font-weight: 700;
   }
 
   .producto__lista {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem 1rem;
+    margin-bottom: 2rem;
   }
 
   .producto__item {
     display: flex;
     align-items: flex-start;
-    gap: 0.75rem;
-    font-size: 0.95rem;
+    gap: 0.8rem;
     color: var(--color-text);
-    line-height: 1.5;
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  .producto__icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+    background: rgba(212, 80, 10, 0.1);
   }
 
   .producto__check {
     color: var(--color-accent);
-    font-weight: 700;
-    font-size: 1.1rem;
-    flex-shrink: 0;
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.6s ease;
+  .producto__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .producto__btn {
+    width: auto;
+  }
+
+  @media (max-width: 1100px) {
+    .producto__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .producto__data-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .producto__img {
+      min-height: 440px;
+    }
   }
 
   @media (max-width: 768px) {
-    .producto__wrapper {
-      grid-template-columns: 1fr;
+    .producto__container {
       gap: 2rem;
+    }
+
+    .producto__spec-block {
+      padding: 1.5rem;
+    }
+
+    .producto__data-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .producto__lista {
+      grid-template-columns: 1fr;
+    }
+
+    .producto__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .producto__btn {
+      width: 100%;
+    }
+
+    .producto__img {
+      min-height: 320px;
+    }
+
+    .producto__floating-card {
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .producto__data-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

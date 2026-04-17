@@ -33,66 +33,306 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap"
       rel="stylesheet"
     />
 
     <style is:global>
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
 
       :root {
-        --color-primary: #2D4A1E;
-        --color-accent: #C8922A;
-        --color-text: #1E1E1E;
-        --color-white: #FFFFFF;
-        --color-bg: #FFFFFF;
-        --font-base: 'Roboto', sans-serif;
+        --color-primary: #0e1012;
+        --color-primary-soft: #1a1d22;
+        --color-secondary: #2a2d32;
+        --color-accent: #d4500a;
+        --color-accent-hover: #b8420a;
+
+        --color-text: #0e1012;
+        --color-text-soft: #4a5260;
+        --color-text-muted: #8a939f;
+
+        --color-white: #ffffff;
+        --color-bg: #f4f3ef;
+        --color-surface: #ffffff;
+        --color-border: #d0d5dc;
+
+        --font-base: "Barlow", sans-serif;
+        --font-heading: "Barlow Condensed", sans-serif;
+
+        --container-width: 1200px;
+        --container-padding: 2rem;
+        --container-padding-mobile: 1.25rem;
+
+        --section-space: 5rem;
+        --section-space-mobile: 3.5rem;
+
+        --radius-sm: 0.5rem;
+        --radius-md: 0.9rem;
+        --radius-lg: 1.25rem;
+
+        --shadow-soft: 0 10px 30px rgba(14, 16, 18, 0.06);
+        --transition-base: 0.25s ease;
       }
 
       html {
+        scroll-behavior: smooth;
         overflow-x: hidden;
       }
 
       body {
         font-family: var(--font-base);
         font-size: 16px;
+        line-height: 1.6;
         color: var(--color-text);
-        background-color: var(--color-bg);
+        background: var(--color-bg);
         overflow-x: hidden;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      main {
+        width: 100%;
+      }
+
+      section {
+        position: relative;
+      }
+
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
       }
 
       img {
-        max-width: 100%;
-        display: block;
+        height: auto;
       }
 
       a {
-        text-decoration: none;
         color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      button {
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
+
+      ul,
+      ol {
+        list-style: none;
+      }
+
+      .container {
+        width: min(100% - (var(--container-padding) * 2), var(--container-width));
+        margin-inline: auto;
+      }
+
+      .section {
+        padding-block: var(--section-space);
+      }
+
+      .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.9rem;
+        font-family: var(--font-heading);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+      }
+
+      .section-label::before {
+        content: "";
+        width: 1.25rem;
+        height: 1px;
+        background: currentColor;
+      }
+
+      .section-title {
+        font-family: var(--font-heading);
+        font-size: clamp(2.25rem, 5vw, 4.5rem);
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        color: var(--color-primary);
+      }
+
+      .section-text {
+        font-size: 1rem;
+        color: var(--color-text-soft);
+        line-height: 1.75;
+      }
+
+      .btn-primary,
+      .btn-secondary,
+      .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        min-height: 48px;
+        padding: 0.85rem 1.5rem;
+        transition:
+          background-color var(--transition-base),
+          color var(--transition-base),
+          border-color var(--transition-base),
+          transform var(--transition-base),
+          opacity var(--transition-base);
+        will-change: transform;
+      }
+
+      .btn-primary {
+        background: var(--color-accent);
+        color: var(--color-white);
+        font-family: var(--font-heading);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .btn-primary:hover {
+        background: var(--color-accent-hover);
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: var(--color-primary);
+        color: var(--color-white);
+        font-family: var(--font-heading);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .btn-secondary:hover {
+        background: var(--color-secondary);
+        transform: translateY(-1px);
+      }
+
+      .btn-ghost {
+        border: 1px solid var(--color-border);
+        color: var(--color-text);
+        background: transparent;
+        font-family: var(--font-heading);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .btn-ghost:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+        transform: translateY(-1px);
+      }
+
+      .card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+
+        .reveal,
+        .reveal.visible {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        :root {
+          --section-space: var(--section-space-mobile);
+        }
+
+        .container {
+          width: min(100% - (var(--container-padding-mobile) * 2), var(--container-width));
+        }
+
+        .section-title {
+          line-height: 1;
+        }
+
+        .btn-primary,
+        .btn-secondary,
+        .btn-ghost {
+          width: 100%;
+        }
       }
     </style>
   </head>
   <body>
     <slot />
+
     <script>
       const elements = document.querySelectorAll(".reveal");
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
+      if ("IntersectionObserver" in window && elements.length) {
+        const observer = new IntersectionObserver(
+          (entries, observerRef) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observerRef.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12 }
+        );
 
-      elements.forEach((el) => observer.observe(el));
+        elements.forEach((el) => observer.observe(el));
+      } else {
+        elements.forEach((el) => el.classList.add("visible"));
+      }
     </script>
   </body>
 </html>

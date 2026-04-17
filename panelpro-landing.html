@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel.Pro — Paneles Arquitectónicos Industriales</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0e1012;
+  --ink2:#2a2d32;
+  --steel:#4a5260;
+  --mist:#8a939f;
+  --rule:#d0d5dc;
+  --bg:#f4f3ef;
+  --bgw:#ffffff;
+  --accent:#d4500a;
+  --accent2:#1a3a5c;
+  --condensed:'Barlow Condensed',sans-serif;
+  --body:'Barlow',sans-serif;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+nav{background:var(--ink);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:54px;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:var(--condensed);font-weight:900;font-size:18px;color:#fff;letter-spacing:0.06em;text-transform:uppercase}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:#8a939f;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;font-family:var(--condensed);font-weight:600;transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{background:var(--accent);color:#fff;font-size:11px;font-family:var(--condensed);font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:7px 18px;border:none;cursor:pointer;transition:background .2s}
+.nav-cta:hover{background:#b8420a}
+
+/* HERO */
+.hero{background:var(--ink);min-height:580px;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+.hero-left{padding:4rem 2rem 4rem 3rem;display:flex;flex-direction:column;justify-content:center;z-index:2}
+.hero-eyebrow{font-family:var(--condensed);font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+.hero-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--accent)}
+.hero-h{font-family:var(--condensed);font-weight:900;font-size:clamp(48px,6vw,80px);line-height:0.92;color:#fff;text-transform:uppercase;letter-spacing:-1px;margin-bottom:1.25rem}
+.hero-h em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:14px;color:#8a939f;line-height:1.7;max-width:360px;margin-bottom:2rem;font-weight:300}
+.hero-actions{display:flex;gap:1rem;align-items:center}
+.btn-primary{background:var(--accent);color:#fff;font-family:var(--condensed);font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;padding:12px 28px;border:none;cursor:pointer;transition:background .2s}
+.btn-primary:hover{background:#b8420a}
+.btn-ghost{border:1px solid #3a3f48;color:#8a939f;font-family:var(--condensed);font-weight:600;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:11px 24px;background:none;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:#8a939f;color:#fff}
+.hero-right{position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;opacity:0.18}
+.hero-grid div{background:linear-gradient(135deg,#2a2d32,#1a1d22)}
+.hero-panel-vis{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.panel-iso{width:300px;height:200px;position:relative}
+.panel-top{position:absolute;top:0;left:30px;right:0;height:90px;background:linear-gradient(160deg,#3a4250,#2a3040);clip-path:polygon(30px 0,100% 0,100% 100%,0 100%);display:flex;align-items:center;justify-content:center}
+.panel-face{position:absolute;bottom:0;left:0;right:30px;height:140px;background:linear-gradient(180deg,#222730,#1a1d22);display:flex;flex-direction:column;justify-content:flex-end;padding:12px}
+.panel-ribs{position:absolute;inset:0;display:flex;gap:18px;padding:8px;opacity:0.3}
+.panel-rib{flex:1;background:linear-gradient(180deg,#4a5260,transparent);border-radius:1px}
+.panel-side{position:absolute;right:0;top:0;bottom:0;width:30px;background:linear-gradient(180deg,#1a2030,#0e1220)}
+.panel-label{font-family:var(--condensed);font-size:10px;letter-spacing:0.15em;color:#4a5260;text-transform:uppercase}
+.panel-spec{font-family:var(--condensed);font-size:22px;font-weight:900;color:var(--accent);line-height:1}
+.hero-stats{position:absolute;bottom:2rem;right:2rem;display:flex;flex-direction:column;gap:1rem;z-index:2}
+.hero-stat{text-align:right}
+.hero-stat-n{font-family:var(--condensed);font-size:28px;font-weight:900;color:#fff;line-height:1}
+.hero-stat-l{font-size:10px;color:#4a5260;letter-spacing:0.1em;text-transform:uppercase}
+
+/* SPEC BAND */
+.spec-band{background:var(--accent);padding:1rem 3rem;display:flex;gap:3rem;overflow-x:auto}
+.spec-item{display:flex;align-items:center;gap:0.75rem;white-space:nowrap}
+.spec-icon{width:20px;height:20px;opacity:0.9;flex-shrink:0}
+.spec-text{font-family:var(--condensed);font-size:13px;font-weight:600;letter-spacing:0.08em;color:#fff;text-transform:uppercase}
+
+/* SECTION BASE */
+section{padding:4rem 3rem}
+.section-label{font-family:var(--condensed);font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem}
+.section-label::before{content:'';width:16px;height:1px;background:var(--accent)}
+.section-h{font-family:var(--condensed);font-weight:900;font-size:clamp(32px,4vw,52px);line-height:0.95;text-transform:uppercase;color:var(--ink);letter-spacing:-0.5px;margin-bottom:1.5rem}
+
+/* PRODUCTS */
+.products{background:var(--bgw)}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--rule);margin-top:2rem;border:1px solid var(--rule)}
+.prod-card{background:var(--bgw);padding:1.5rem;position:relative;transition:background .2s;cursor:pointer}
+.prod-card:hover{background:#f8f7f3}
+.prod-card:hover .prod-arrow{opacity:1;transform:translateX(4px)}
+.prod-num{font-family:var(--condensed);font-size:11px;color:var(--mist);letter-spacing:0.15em;margin-bottom:1rem}
+.prod-icon-wrap{width:48px;height:48px;background:var(--bg);display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.prod-name{font-family:var(--condensed);font-weight:700;font-size:20px;text-transform:uppercase;color:var(--ink2);line-height:1.1;margin-bottom:0.5rem}
+.prod-desc{font-size:12px;color:var(--steel);line-height:1.6;margin-bottom:1rem}
+.prod-specs{display:flex;flex-direction:column;gap:4px;margin-bottom:1rem}
+.prod-spec{font-size:11px;color:var(--mist);display:flex;align-items:center;gap:6px}
+.prod-spec::before{content:'—';color:var(--accent);font-size:10px}
+.prod-arrow{font-size:18px;color:var(--accent);opacity:0;transition:all .2s;position:absolute;bottom:1.5rem;right:1.5rem}
+
+/* FEATURES */
+.features{background:var(--ink2)}
+.features .section-label{color:var(--accent)}
+.features .section-h{color:#fff}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:2.5rem}
+.feat-item{border-top:1px solid #3a4050;padding-top:1.25rem}
+.feat-n{font-family:var(--condensed);font-size:48px;font-weight:900;color:var(--accent);line-height:0.9;margin-bottom:0.5rem}
+.feat-title{font-family:var(--condensed);font-size:15px;font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:0.08em;margin-bottom:0.5rem}
+.feat-desc{font-size:12px;color:#5a6070;line-height:1.6}
+
+/* AUDIENCE */
+.audience{background:var(--bg)}
+.aud-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem}
+.aud-card{background:var(--bgw);padding:1.75rem;border-bottom:3px solid transparent;transition:border-color .2s}
+.aud-card:hover{border-color:var(--accent)}
+.aud-role{font-family:var(--condensed);font-size:22px;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:0.75rem}
+.aud-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.aud-list li{font-size:12px;color:var(--steel);display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+.aud-list li::before{content:'→';color:var(--accent);font-size:11px;flex-shrink:0;margin-top:1px}
+
+/* CTA */
+.cta-section{background:var(--accent2);padding:4rem 3rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem}
+.cta-h{font-family:var(--condensed);font-weight:900;font-size:clamp(28px,4vw,48px);text-transform:uppercase;color:#fff;line-height:0.95;letter-spacing:-0.5px}
+.cta-h span{color:var(--accent)}
+.cta-sub{font-size:13px;color:#7a9ab8;margin-top:0.75rem;max-width:400px}
+.cta-actions{display:flex;flex-direction:column;gap:0.75rem;align-items:flex-end}
+
+/* FOOTER */
+footer{background:var(--ink);padding:2rem 3rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem}
+.foot-domains{display:flex;gap:1.5rem;flex-wrap:wrap}
+.foot-domain{font-family:var(--condensed);font-size:12px;color:#3a4050;letter-spacing:0.08em;text-transform:lowercase;transition:color .2s;cursor:pointer}
+.foot-domain:hover{color:#5a6070}
+.foot-copy{font-size:11px;color:#3a4050;font-family:var(--condensed);letter-spacing:0.08em}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero-left>*{animation:fadeUp .6s ease both}
+.hero-left>*:nth-child(1){animation-delay:.1s}
+.hero-left>*:nth-child(2){animation-delay:.2s}
+.hero-left>*:nth-child(3){animation-delay:.35s}
+.hero-left>*:nth-child(4){animation-delay:.5s}
+
+@media(max-width:700px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .aud-grid{grid-template-columns:1fr}
+  .cta-section{grid-template-columns:1fr}
+  .cta-actions{align-items:flex-start}
+  footer{grid-template-columns:1fr}
+  nav .nav-links{display:none}
+  section{padding:3rem 1.5rem}
+  .spec-band{padding:1rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Panel<span>.</span>Pro</div>
+  <ul class="nav-links">
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#especificaciones">Especificaciones</a></li>
+    <li><a href="#clientes">Para quién</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <button class="nav-cta">Cotizar proyecto</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Paneles arquitectónicos industriales</div>
+    <h1 class="hero-h">Estructura<br>que <em>protege.</em><br>Diseño que<br>perdura.</h1>
+    <p class="hero-sub">Soluciones de paneles para techo, muro y piso con aislamiento térmico, acústico y resistencia estructural para proyectos de cualquier escala.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">Ver especificaciones</button>
+      <button class="btn-ghost">Descargar ficha técnica</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-grid">
+      <div></div><div></div><div></div><div></div>
+    </div>
+    <div class="hero-panel-vis">
+      <div class="panel-iso">
+        <div class="panel-top">
+          <div class="panel-ribs">
+            <div class="panel-rib"></div><div class="panel-rib"></div>
+            <div class="panel-rib"></div><div class="panel-rib"></div>
+            <div class="panel-rib"></div><div class="panel-rib"></div>
+          </div>
+        </div>
+        <div class="panel-face">
+          <div class="panel-label">Panel TR-200</div>
+          <div class="panel-spec">200mm</div>
+        </div>
+        <div class="panel-side"></div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-n">+40</div><div class="hero-stat-l">Años en el mercado</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">4</div><div class="hero-stat-l">Líneas de producto</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="spec-band">
+  <div class="spec-item">
+    <svg class="spec-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="16" height="4" fill="rgba(255,255,255,0.8)"/><path d="M4 8V5M8 8V4M12 8V5M16 8V6" stroke="white" stroke-width="1.5"/></svg>
+    <span class="spec-text">Aislamiento acústico certificado</span>
+  </div>
+  <div class="spec-item">
+    <svg class="spec-icon" viewBox="0 0 20 20" fill="none"><path d="M3 16L10 4L17 16H3Z" stroke="white" stroke-width="1.5" fill="none"/><line x1="10" y1="10" x2="10" y2="14" stroke="white" stroke-width="1.5"/></svg>
+    <span class="spec-text">Resistencia de carga estructural</span>
+  </div>
+  <div class="spec-item">
+    <svg class="spec-icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="white" stroke-width="1.5"/><path d="M7 10L9 12L13 8" stroke="white" stroke-width="1.5"/></svg>
+    <span class="spec-text">Instalación rápida en obra</span>
+  </div>
+  <div class="spec-item">
+    <svg class="spec-icon" viewBox="0 0 20 20" fill="none"><path d="M4 4h12v12H4z" stroke="white" stroke-width="1.5" fill="none"/><path d="M4 10h12M10 4v12" stroke="white" stroke-width="1"/></svg>
+    <span class="spec-text">Resistencia a la intemperie</span>
+  </div>
+  <div class="spec-item">
+    <svg class="spec-icon" viewBox="0 0 20 20" fill="none"><path d="M3 17L10 3L17 17" stroke="white" stroke-width="1.5" fill="none"/><path d="M6 12h8" stroke="white" stroke-width="1"/></svg>
+    <span class="spec-text">Acabados arquitectónicos de alto nivel</span>
+  </div>
+</div>
+
+<section class="products" id="productos">
+  <div class="section-label">Líneas de producto</div>
+  <h2 class="section-h">Cuatro sistemas.<br>Una sola fuente.</h2>
+  <div class="products-grid">
+    <div class="prod-card">
+      <div class="prod-num">01 / Techos</div>
+      <div class="prod-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 18L14 6L24 18H4Z" stroke="#d4500a" stroke-width="1.5" fill="none"/><line x1="4" y1="18" x2="24" y2="18" stroke="#4a5260" stroke-width="1.5"/></svg>
+      </div>
+      <div class="prod-name">Panel de Techo</div>
+      <div class="prod-desc">Paneles estructurales con núcleo aislante para naves industriales, bodegas y edificaciones.</div>
+      <ul class="prod-specs">
+        <li class="prod-spec">Aislamiento térmico R-30</li>
+        <li class="prod-spec">Acústico hasta 42 dB</li>
+        <li class="prod-spec">Instalación modular</li>
+      </ul>
+      <div class="prod-arrow">→</div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-num">02 / Muros</div>
+      <div class="prod-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="6" width="20" height="16" stroke="#d4500a" stroke-width="1.5" fill="none"/><line x1="4" y1="14" x2="24" y2="14" stroke="#4a5260" stroke-width="1"/><line x1="14" y1="6" x2="14" y2="22" stroke="#4a5260" stroke-width="1"/></svg>
+      </div>
+      <div class="prod-name">Wall Panels</div>
+      <div class="prod-desc">Fachadas y muros interiores con acabados arquitectónicos de alta precisión dimensional.</div>
+      <ul class="prod-specs">
+        <li class="prod-spec">Resistencia a humedad</li>
+        <li class="prod-spec">Acabado liso o texturizado</li>
+        <li class="prod-spec">Múltiples espesores</li>
+      </ul>
+      <div class="prod-arrow">→</div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-num">03 / Pisos</div>
+      <div class="prod-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="16" width="20" height="6" stroke="#d4500a" stroke-width="1.5" fill="none"/><path d="M4 16L8 10H20L24 16" stroke="#4a5260" stroke-width="1"/></svg>
+      </div>
+      <div class="prod-name">Floor Panels</div>
+      <div class="prod-desc">Paneles de piso con alta resistencia de carga para entornos industriales y comerciales de alta exigencia.</div>
+      <ul class="prod-specs">
+        <li class="prod-spec">Carga hasta 800 kg/m²</li>
+        <li class="prod-spec">Aislamiento térmico inferior</li>
+        <li class="prod-spec">Antideslizante certificado</li>
+      </ul>
+      <div class="prod-arrow">→</div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-num">04 / Edificación</div>
+      <div class="prod-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="6" y="8" width="16" height="14" stroke="#d4500a" stroke-width="1.5" fill="none"/><path d="M6 8L14 2L22 8" stroke="#4a5260" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="prod-name">Building Insulation</div>
+      <div class="prod-desc">Sistema integral de aislamiento para envolventes completas de edificio, desde cimientos hasta cubierta.</div>
+      <ul class="prod-specs">
+        <li class="prod-spec">Sistema 360° certificado</li>
+        <li class="prod-spec">Compatible con LEED</li>
+        <li class="prod-spec">Asesoría de proyecto</li>
+      </ul>
+      <div class="prod-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="especificaciones">
+  <div class="section-label">Por qué elegirnos</div>
+  <h2 class="section-h">Rendimiento<br>en cada m²</h2>
+  <div class="feat-grid">
+    <div class="feat-item">
+      <div class="feat-n">42</div>
+      <div class="feat-title">dB de aislamiento acústico</div>
+      <div class="feat-desc">Reducción de ruido certificada para techos industriales y muros divisorios en entornos de alta demanda.</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-n">800</div>
+      <div class="feat-title">kg/m² de resistencia</div>
+      <div class="feat-desc">Paneles de piso diseñados para soportar cargas industriales pesadas sin deformación estructural.</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-n">3×</div>
+      <div class="feat-title">Más rápido de instalar</div>
+      <div class="feat-desc">Sistema de ensamble en seco con uniones machiembradas que reduce los tiempos de obra considerablemente.</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-n">25+</div>
+      <div class="feat-title">Años de vida útil garantizada</div>
+      <div class="feat-desc">Materiales tratados con anticorrosivo y resistencia a intemperie para climas extremos.</div>
+    </div>
+  </div>
+</section>
+
+<section class="audience" id="clientes">
+  <div class="section-label">A quién va dirigido</div>
+  <h2 class="section-h">Soluciones para<br>quienes construyen.</h2>
+  <div class="aud-grid">
+    <div class="aud-card">
+      <div class="aud-role">Arquitectos</div>
+      <ul class="aud-list">
+        <li>Fichas técnicas CAD/BIM disponibles</li>
+        <li>Acabados compatibles con diseño arquitectónico</li>
+        <li>Muestras físicas para especificación</li>
+        <li>Asesoría técnica en proyecto</li>
+      </ul>
+    </div>
+    <div class="aud-card">
+      <div class="aud-role">Ingenieros Civiles</div>
+      <ul class="aud-list">
+        <li>Memorias de cálculo estructural</li>
+        <li>Certificaciones de carga y sismo</li>
+        <li>Espesores y densidades documentados</li>
+        <li>Soporte técnico en campo</li>
+      </ul>
+    </div>
+    <div class="aud-card">
+      <div class="aud-role">Naves Industriales</div>
+      <ul class="aud-list">
+        <li>Presupuesto por m² inmediato</li>
+        <li>Instalación llave en mano disponible</li>
+        <li>Grandes volúmenes con tiempos garantizados</li>
+        <li>Mantenimiento post-instalación</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section" id="contacto">
+  <div>
+    <h2 class="cta-h">¿Tienes un proyecto<br>en <span>mente?</span></h2>
+    <p class="cta-sub">Cuéntanos las dimensiones y uso previsto. Te enviamos una cotización detallada en menos de 24 horas.</p>
+  </div>
+  <div class="cta-actions">
+    <button class="btn-primary" style="white-space:nowrap">Solicitar cotización</button>
+    <button class="btn-ghost" style="border-color:#2a4a6a;color:#7a9ab8;white-space:nowrap">Descargar catálogo</button>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-domains">
+    <span class="foot-domain">paneldetecho.com</span>
+    <span class="foot-domain">wallandroofpanels.com</span>
+    <span class="foot-domain">floorinsulationpanels.com</span>
+    <span class="foot-domain">buildinginsulationpanels.com</span>
+  </div>
+  <span class="foot-copy">© 2026 Panel.Pro — Todos los derechos reservados</span>
+</footer>
+
+</body>
+</html>

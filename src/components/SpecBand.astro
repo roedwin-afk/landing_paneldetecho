@@ -1,0 +1,85 @@
+---
+import {
+  Thermometer,
+  Volume2,
+  Zap,
+  ShieldCheck,
+  Layers
+} from "lucide-astro";
+
+const specs = [
+  { icon: Thermometer, text: "Aislamiento térmico eficiente" },
+  { icon: Volume2, text: "Reducción acústica industrial" },
+  { icon: Zap, text: "Instalación rápida en obra" },
+  { icon: ShieldCheck, text: "Alta resistencia estructural" },
+  { icon: Layers, text: "Acabado arquitectónico premium" }
+];
+---
+
+<div class="spec-band">
+  <div class="spec-band__inner">
+    {specs.map(({ icon: Icon, text }) => (
+      <div class="spec-item">
+        <Icon class="spec-icon" size={18} stroke-width={1.5} />
+        <span class="spec-text">{text}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .spec-band {
+    width: 100%;
+    background: var(--color-accent);
+    overflow-x: auto;
+  }
+
+  .spec-band__inner {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 1rem var(--container-padding);
+    min-width: max-content;
+  }
+
+  .spec-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    white-space: nowrap;
+  }
+
+  .spec-icon {
+    color: rgba(255, 255, 255, 0.9);
+    flex-shrink: 0;
+  }
+
+  .spec-text {
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-white);
+  }
+
+  /* scroll limpio */
+  .spec-band::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .spec-band::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.25);
+  }
+
+  @media (max-width: 768px) {
+    .spec-band__inner {
+      gap: 2rem;
+      padding: 0.9rem var(--container-padding-mobile);
+    }
+
+    .spec-text {
+      font-size: 0.7rem;
+    }
+  }
+</style>

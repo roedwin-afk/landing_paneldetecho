@@ -2,7 +2,7 @@
 export const prerender = true;
 
 import Layout from "../../layouts/Layout.astro";
-import Header from "../../components/Header.astro";
+import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
 
 export async function getStaticPaths() {
@@ -22,7 +22,7 @@ const { post } = Astro.props as { post: any };
   title={`${post.title.rendered} | Panel Para Cuarto Frío`}
   description={post.excerpt.rendered.replace(/<[^>]*>/g, "").trim()}
 >
-  <Header />
+  <Navbar />
 
   <main class="post">
     <article class="post__container">
