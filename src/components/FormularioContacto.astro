@@ -1,133 +1,411 @@
-<section class="contact">
-  <div class="contact__container">
-    <!-- Texto -->
-    <div class="contact__info fade-in">
-      <h1>Solicita tu cotización</h1>
-      <p>
-        Contáctanos para asesorarte en la selección de paneles para tu cámara
-        fría. Te respondemos lo más rápido posible.
+---
+import { Mail, Phone, MapPin } from "lucide-astro";
+import "leaflet/dist/leaflet.css";
+---
+
+<section class="contact section" id="formulario">
+  <div class="contact__container container">
+    <div class="contact__info reveal">
+      <div class="section-label">Contacto</div>
+      <h2 class="contact__title">
+        Solicita una cotización<br />
+        para tu <span>proyecto.</span>
+      </h2>
+
+      <p class="contact__intro">
+        Comparte los datos de tu obra y te ayudamos a definir una solución de
+        panel para techo según el tipo de proyecto, condiciones de instalación y
+        requerimientos de desempeño.
       </p>
 
       <div class="contact__data">
-        <p>📧 info@panelparacuartofrio.com</p>
-        <p>📱 +503 6540-0000</p>
-        <p>📍 El Salvador</p>
+        <div class="contact__item">
+          <Mail size={18} stroke-width={1.8} />
+          <a href="mailto:info@panelparacuartofrio.com">
+            info@panelparacuartofrio.com
+          </a>
+        </div>
+
+        <div class="contact__item">
+          <Phone size={18} stroke-width={1.8} />
+          <a href="tel:+525599903546">+52 55 9990 3546</a>
+        </div>
+
+        <div class="contact__item contact__item--address">
+          <MapPin size={18} stroke-width={1.8} />
+          <a
+            href="https://maps.google.com/?cid=15759084979067732314&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+            aria-label="Google Maps"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Avenida Presidente Masaryk No. 61, Int. 901 Colonia Polanco V
+            Sección, C.P. 11560 Alcaldía Miguel Hidalgo, Ciudad de México,
+            México
+          </a>
+        </div>
+      </div>
+
+      <div class="contact__map">
+        <div
+          id="contact-leaflet-map"
+          class="contact__map-canvas"
+          aria-label="Ubicación en mapa"
+        ></div>
       </div>
     </div>
 
-    <!-- Formulario -->
     <form
-      class="contact__form fade-in"
-      action="https://formspree.io/f/maqlkvyj"
+      class="contact__form reveal"
+      action="https://forms.zohopublic.com/promaica/form/SolicituddeCotizacin/formperma/0G7mUvm1mHqTMr77oTQpng90acA6JYYKZtboiNDls70/htmlRecords/submit"
+      name="form"
+      id="zoho-form"
       method="POST"
+      accept-charset="UTF-8"
+      enctype="multipart/form-data"
     >
-      <input type="hidden" name="_next" value="http://localhost:4321/gracias" />
-      <input type="text" name="nombre" placeholder="Nombre" required />
-      <input
-        type="email"
-        name="email"
-        placeholder="Correo electrónico"
-        required
-      />
-      <input type="tel" name="telefono" placeholder="Teléfono" />
-      <textarea
-        name="mensaje"
-        rows="5"
-        placeholder="Cuéntanos qué necesitas..."
-        required></textarea>
+      <input type="hidden" name="zf_referrer_name" value="" />
+      <input type="hidden" name="zf_redirect_url" value="/gracias" />
+      <input type="hidden" name="zc_gad" value="" />
 
-      <button type="submit">Enviar solicitud →</button>
+      <div class="contact__form-head">
+        <span class="contact__form-kicker">Formulario de proyecto</span>
+        <h3 class="contact__form-title">
+          Cuéntanos qué necesitas y te contactamos.
+        </h3>
+      </div>
+
+      <div class="form__row">
+        <div class="form__group">
+          <label for="Name_First">Nombre</label>
+          <input
+            type="text"
+            maxlength="255"
+            name="Name_First"
+            id="Name_First"
+            placeholder="Nombre"
+            required
+          />
+        </div>
+
+        <div class="form__group">
+          <label for="Name_Last">Apellido</label>
+          <input
+            type="text"
+            maxlength="255"
+            name="Name_Last"
+            id="Name_Last"
+            placeholder="Apellido"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form__group">
+        <label for="Email">Correo electrónico</label>
+        <input
+          type="email"
+          name="Email"
+          id="Email"
+          maxlength="255"
+          placeholder="correo@ejemplo.com"
+          required
+        />
+      </div>
+
+      <div class="form__group">
+        <label for="PhoneNumber">Teléfono</label>
+        <input
+          type="tel"
+          name="PhoneNumber_countrycode"
+          id="PhoneNumber"
+          maxlength="20"
+          placeholder="+52 00 0000 0000"
+        />
+      </div>
+
+      <div class="form__group">
+        <label for="MultiLine">Mensaje</label>
+        <textarea
+          name="MultiLine"
+          id="MultiLine"
+          rows="6"
+          placeholder="Cuéntanos el tipo de proyecto, ubicación, dimensiones aproximadas y lo que necesitas."
+          required
+        ></textarea>
+      </div>
+
+      <button type="submit" class="contact__submit">
+        Enviar solicitud
+      </button>
     </form>
   </div>
 </section>
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const mapContainer = document.getElementById("contact-leaflet-map");
+    if (!mapContainer || typeof window === "undefined" || !window.L) return;
+
+    const customIcon = window.L.icon({
+      iconUrl:
+        "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png",
+      shadowUrl:
+        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41],
+    });
+
+    const lat = 19.4326;
+    const lng = -99.1946;
+
+    const map = window.L.map("contact-leaflet-map").setView([lat, lng], 16);
+
+    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors",
+    }).addTo(map);
+
+    window.L.marker([lat, lng], { icon: customIcon })
+      .addTo(map)
+      .bindPopup("Masaryk 61, Int. 901, Polanco V, 11560, CDMX")
+      .openPopup();
+
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 200);
+  });
+</script>
+
 <style>
   .contact {
-    padding: 4rem 2rem;
+    background: var(--color-bg);
   }
 
   .contact__container {
-    max-width: 1100px;
-    margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 2rem;
+    align-items: start;
   }
 
-  .contact__info h1 {
-    font-size: 2rem;
+  .contact__info {
+    padding-right: 1rem;
+  }
+
+  .contact__title {
     margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2.1rem, 4vw, 3.4rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--color-primary);
   }
 
-  .contact__info p {
-    margin-bottom: 1rem;
-    line-height: 1.6;
+  .contact__title span {
+    color: var(--color-accent);
   }
 
-  .contact__data p {
-    font-weight: 600;
+  .contact__intro {
+    max-width: 33rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-soft);
+    font-size: 0.98rem;
+    line-height: 1.8;
+  }
+
+  .contact__data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: var(--color-text-soft);
+  }
+
+  .contact__item svg {
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .contact__item a {
+    color: var(--color-text);
+    line-height: 1.7;
+    transition: color var(--transition-base);
+  }
+
+  .contact__item a:hover {
+    color: var(--color-accent);
+  }
+
+  .contact__map-canvas {
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: #f3f1ec;
   }
 
   .contact__form {
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .contact__form-head {
+    margin-bottom: 1.5rem;
+  }
+
+  .contact__form-kicker {
+    display: inline-flex;
+    margin-bottom: 0.8rem;
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .contact__form-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form__group {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+  }
+
+  .form__group label {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-soft);
   }
 
   .contact__form input,
   .contact__form textarea {
-    padding: 0.9rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-family: inherit;
+    width: 100%;
+    min-height: 50px;
+    padding: 0.95rem 1rem;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    color: var(--color-text);
+    font-family: var(--font-base);
+    font-size: 0.98rem;
+    transition:
+      border-color var(--transition-base),
+      box-shadow var(--transition-base),
+      background-color var(--transition-base);
   }
 
-  .contact__form button {
-    background-color: var(--color-accent);
-    color: white;
-    padding: 0.9rem;
-    border: none;
+  .contact__form textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .contact__form input:focus,
+  .contact__form textarea:focus {
+    outline: none;
+    border-color: rgba(212, 80, 10, 0.45);
+    box-shadow: 0 0 0 3px rgba(212, 80, 10, 0.12);
+  }
+
+  .contact__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    padding: 0.95rem 1.5rem;
+    background: var(--color-accent);
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
     font-weight: 700;
-    cursor: pointer;
-    border-radius: 4px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition:
+      background-color var(--transition-base),
+      transform var(--transition-base);
   }
 
-  .contact__form button:hover {
-    opacity: 0.9;
+  .contact__submit:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
   }
 
-  /* Responsive */
-  @media (max-width: 768px) {
+  :global(.leaflet-popup-content-wrapper) {
+    border-radius: 0;
+  }
+
+  :global(.leaflet-popup-content) {
+    font-family: var(--font-base);
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  :global(.leaflet-control-zoom a) {
+    color: var(--color-primary);
+  }
+
+  :global(.leaflet-control-attribution) {
+    font-family: var(--font-base);
+    font-size: 11px;
+  }
+
+  @media (max-width: 900px) {
     .contact__container {
       grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .contact__info {
+      padding-right: 0;
     }
   }
 
   @media (max-width: 768px) {
-    .contact {
-      padding: 3rem 1.5rem;
+    .contact__form {
+      padding: 1.5rem;
     }
 
-    .contact__info h1 {
-      font-size: 1.5rem;
+    .form__row {
+      grid-template-columns: 1fr;
     }
 
-    .contact__form input,
-    .contact__form textarea {
-      font-size: 1rem;
-    }
-
-    .contact__form button {
-      font-size: 1rem;
-      padding: 1rem;
+    .contact__map-canvas {
+      height: 240px;
     }
   }
 </style>
-
-<script>
-  window.addEventListener("pageshow", (event) => {
-    if (event.persisted) {
-      const form = document.querySelector<HTMLFormElement>(".contact__form");
-      if (form) form.reset();
-    }
-  });
-</script>

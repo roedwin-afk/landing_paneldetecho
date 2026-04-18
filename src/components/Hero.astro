@@ -18,7 +18,7 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
       <p class="hero__sub">
         Soluciones de panel de techo con aislamiento térmico, resistencia
         estructural e instalación rápida para proyectos industriales y
-        comerciales en El Salvador y Centroamérica.
+        comerciales en México.
       </p>
 
       <div class="hero__actions">
@@ -58,7 +58,7 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
       <div class="hero__image-card">
         <Image
           src={heroPanelTecho}
-          alt="Panel de techo industrial para naves y edificios"
+          alt="Panel de techo industrial para naves y edificios en México"
           width={700}
           height={420}
           loading="eager"
@@ -84,7 +84,7 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
 <style>
   .hero {
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* ← YA LO TIENES */
     background: linear-gradient(90deg, #05080c 0%, #0a0f15 55%, #0c1118 100%);
     min-height: calc(70vh - 72px);
     display: flex;
@@ -100,6 +100,8 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
     min-height: calc(70vh - 72px);
     padding-top: 4rem;
     padding-bottom: 4rem;
+    max-width: var(--container-width); /* ← AGREGADO */
+    overflow: hidden; /* ← AGREGADO */
   }
 
   .hero__left {
@@ -203,6 +205,8 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden; /* ← MANTENER */
+    max-width: 100%; /* ← AGREGADO */
   }
 
   .hero__grid {
@@ -242,7 +246,18 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
     right: 0;
     height: 86px;
     background:
-      linear-gradient(90deg, rgba(255,255,255,0.03) 0 12%, transparent 12% 22%, rgba(255,255,255,0.03) 22% 34%, transparent 34% 44%, rgba(255,255,255,0.03) 44% 56%, transparent 56% 66%, rgba(255,255,255,0.03) 66% 78%, transparent 78% 88%, rgba(255,255,255,0.03) 88% 100%),
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.03) 0 12%,
+        transparent 12% 22%,
+        rgba(255, 255, 255, 0.03) 22% 34%,
+        transparent 34% 44%,
+        rgba(255, 255, 255, 0.03) 44% 56%,
+        transparent 56% 66%,
+        rgba(255, 255, 255, 0.03) 66% 78%,
+        transparent 78% 88%,
+        rgba(255, 255, 255, 0.03) 88% 100%
+      ),
       linear-gradient(180deg, #465169, #313a4d);
     clip-path: polygon(22px 0, 100% 0, 100% 100%, 0 100%);
   }
@@ -294,15 +309,15 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
 
   .hero__image-card {
     position: absolute;
-    right: 3rem;
+    right: 0; /* ← CAMBIADO de -5% */
     top: 50%;
-    transform: translateY(-70%) translateX(30%);
-    width: min(460px, 70%);
-    opacity: 0.80;
+    transform: translateY(-70%); 
+    width: min(460px, 65%); /* ← CAMBIADO de 70% a 65% */
+    opacity: 0.8;
     z-index: 1;
     overflow: hidden;
-    /* filter: grayscale(100%) contrast(1.05); */
     mix-blend-mode: screen;
+    max-width: 100%; /* ← AGREGADO */
   }
 
   .hero__img {
@@ -347,6 +362,12 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
 
     .hero__right {
       min-height: 620px;
+      overflow: hidden; /* ← MANTENER EN TODAS LAS MEDIA QUERIES */
+    }
+
+    .hero__image-card {
+      right: 0;
+      width: min(380px, 55%);
     }
   }
 
@@ -361,6 +382,7 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
       min-height: auto;
       padding-top: 4rem;
       padding-bottom: 4rem;
+      overflow: hidden; /* ← MANTENER */
     }
 
     .hero__left {
@@ -374,10 +396,11 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
 
     .hero__right {
       min-height: 520px;
+      overflow: hidden; /* ← MANTENER */
     }
 
     .hero__image-card {
-      right: 2rem;
+      right: 0;
       width: min(300px, 38%);
     }
   }
@@ -409,6 +432,7 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
 
     .hero__right {
       min-height: 420px;
+      overflow: hidden; /* ← MANTENER */
     }
 
     .hero__panel {
@@ -456,6 +480,7 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
 
     .hero__right {
       min-height: 360px;
+      overflow: hidden; /* ← MANTENER */
     }
 
     .hero__panel {

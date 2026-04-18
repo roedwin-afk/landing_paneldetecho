@@ -1,78 +1,277 @@
 ---
+import { ArrowRight, FileDown } from "lucide-astro";
 ---
 
-<section class="cta reveal" id="contacto">
-  <div class="cta__wrapper">
-    <div class="cta__content">
-      <h2 class="cta__titulo">¿Listo para cubrir tu proyecto?</h2>
-      <p class="cta__texto">
-        Cuéntanos las dimensiones y características de tu techo. 
-        Un especialista te contactará con una propuesta técnica y de precio personalizada.
-      </p>
-      <a href="#formulario" class="cta__btn">Solicitar cotización gratuita →</a>
+<section class="cta" id="contacto">
+  <div class="cta__wrapper container">
+    <div class="cta__inner reveal">
+      <div class="cta__content">
+        <div class="cta__label">
+          <span class="cta__label-dot"></span>
+          Comienza tu proyecto
+        </div>
+
+        <h2 class="cta__title">
+          ¿Tienes un proyecto<br />
+          en <span>mente?</span>
+        </h2>
+
+        <p class="cta__text">
+          Cuéntanos las dimensiones, el tipo de uso y las condiciones de tu
+          cubierta. Te ayudamos a definir la solución de panel para techo más
+          adecuada a las necesidades de tu proyecto.
+        </p>
+      </div>
+
+      <div class="cta__actions">
+        <a href="#formulario" class="cta__btn cta__btn--primary">
+          <span>Solicitar cotización</span>
+          <ArrowRight size={18} stroke-width={2.5} />
+        </a>
+
+        <a href="/catalogo.pdf" class="cta__btn cta__btn--ghost" download>
+          <FileDown size={18} stroke-width={2.5} />
+          <span>Descargar catálogo</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cta__decoration" aria-hidden="true">
+      <div class="cta__grid">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .cta {
-    padding: 5rem 2rem;
-    background-color: #1E3314;
-    text-align: center;
+    position: relative;
+    background: var(--color-secondary);
+    overflow: hidden;
+  }
+
+  /* Efecto de gradiente sutil */
+  .cta::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+      circle at 80% 20%,
+      rgba(212, 80, 10, 0.08) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
   }
 
   .cta__wrapper {
-    max-width: 750px;
-    margin: 0 auto;
+    position: relative;
+    z-index: 1;
   }
 
-  .cta__titulo {
-    color: var(--color-white);
-    font-size: 2rem;
+  .cta__inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 3rem;
+    padding-block: 5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .cta__content {
+    max-width: 640px;
+  }
+
+  .cta__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
   }
 
-  .cta__texto {
-    color: rgba(255,255,255,0.85);
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 2rem;
+  .cta__label-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.2);
+    }
+  }
+
+  .cta__title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .cta__title span {
+    color: var(--color-accent);
+  }
+
+  .cta__text {
+    max-width: 520px;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.68);
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
   }
 
   .cta__btn {
-    display: inline-block;
-    background-color: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    min-height: 52px;
+    padding: 1rem 2rem;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-radius: 2px;
+    transition:
+      background-color var(--transition-base),
+      color var(--transition-base),
+      border-color var(--transition-base),
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .cta__btn--primary {
+    background: var(--color-accent);
     color: var(--color-white);
-    padding: 1rem 2.5rem;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 1rem;
-    transition: opacity 0.2s;
+    box-shadow: 0 4px 16px rgba(212, 80, 10, 0.3);
   }
 
-  .cta__btn:hover {
-    opacity: 0.9;
+  .cta__btn--primary:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 80, 10, 0.4);
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.6s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
+  .cta__btn--primary:active {
     transform: translateY(0);
   }
 
-  @media (max-width: 768px) {
-    .cta__titulo {
-      font-size: 1.5rem;
+  .cta__btn--ghost {
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+  }
+
+  .cta__btn--ghost:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: var(--color-white);
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
+  }
+
+  /* Decoración de fondo */
+  .cta__decoration {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+    height: 400px;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cta__grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1px;
+    transform: rotate(12deg);
+  }
+
+  .cta__grid span {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  @media (max-width: 1024px) {
+    .cta__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding-block: 4rem;
     }
 
-    .cta__texto {
-      font-size: 1rem;
+    .cta__actions {
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .cta__decoration {
+      width: 300px;
+      height: 300px;
+      opacity: 0.05;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cta__inner {
+      padding-block: 3.5rem;
+      gap: 2rem;
+    }
+
+    .cta__title {
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .cta__text {
+      max-width: 100%;
+      font-size: 0.96rem;
+    }
+
+    .cta__btn {
+      width: 100%;
+      min-height: 50px;
+    }
+
+    .cta__decoration {
+      display: none;
     }
   }
 </style>

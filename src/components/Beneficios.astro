@@ -1,33 +1,55 @@
 ---
+import { Thermometer, Zap, Building2 } from "lucide-astro";
+
 const beneficios = [
   {
-    icono: "🌡️",
-    titulo: "Aislamiento térmico superior",
-    texto: "Reduce hasta un 40% el consumo energético en climatización de naves y edificios industriales."
+    icono: Thermometer,
+    titulo: "Aislamiento térmico eficiente",
+    texto:
+      "Reduce la ganancia térmica en cubierta y ayuda a mantener un mejor comportamiento interior en naves, bodegas y edificios expuestos al sol."
   },
   {
-    icono: "⚡",
-    titulo: "Instalación rápida",
-    texto: "Sistema machihembrado que reduce los tiempos de obra hasta un 60% comparado con métodos tradicionales."
+    icono: Zap,
+    titulo: "Instalación más rápida",
+    texto:
+      "Su formato prefabricado y sistema de ensamble facilita un montaje más ágil, con menos procesos en sitio y mayor eficiencia durante la instalación."
   },
   {
-    icono: "🏗️",
-    titulo: "Alta resistencia estructural",
-    texto: "Soporta cargas de viento y nieve, ideal para naves industriales, bodegas y edificios comerciales."
+    icono: Building2,
+    titulo: "Resistencia industrial",
+    texto:
+      "Pensado para cubiertas que requieren desempeño estructural, protección frente a la intemperie y durabilidad en aplicaciones industriales exigentes."
   }
 ];
 ---
 
-<section class="beneficios reveal" id="soluciones">
-  <div class="beneficios__wrapper">
-    <h2 class="beneficios__titulo">¿Por qué elegir panel sándwich para tu techo?</h2>
+<section class="beneficios section" id="beneficios">
+  <div class="beneficios__container container">
+    <div class="beneficios__header reveal">
+      <div class="section-label">Beneficios clave</div>
+      <h2 class="section-title beneficios__title">
+        ¿Por qué elegir panel sándwich<br />
+        para tu techo?
+      </h2>
+      <p class="section-text beneficios__intro">
+        Más que una cubierta, es un sistema que aporta aislamiento, velocidad de
+        instalación y mejor desempeño para proyectos industriales y comerciales.
+      </p>
+    </div>
+
     <div class="beneficios__grid">
-      {beneficios.map((b) => (
-        <div class="beneficios__item">
-          <span class="beneficios__icono">{b.icono}</span>
-          <h3 class="beneficios__nombre">{b.titulo}</h3>
-          <p class="beneficios__texto">{b.texto}</p>
-        </div>
+      {beneficios.map(({ icono: Icono, titulo, texto }, index) => (
+        <article class="beneficios__card reveal">
+          <div class="beneficios__top">
+            <span class="beneficios__number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <Icono class="beneficios__icon" size={24} stroke-width={1.5} />
+          </div>
+
+          <h3 class="beneficios__name">{titulo}</h3>
+          <p class="beneficios__text">{texto}</p>
+        </article>
       ))}
     </div>
   </div>
@@ -35,71 +57,143 @@ const beneficios = [
 
 <style>
   .beneficios {
-    padding: 5rem 2rem;
-    background-color: #F5F5F0;
+    background: var(--color-primary-soft);
+    position: relative;
+    overflow: hidden;
   }
 
-  .beneficios__wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
+  /* Opcional: Agregar un gradient sutil */
+  .beneficios::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 30% 20%,
+      rgba(212, 80, 10, 0.03) 0%,
+      transparent 50%
+    );
+    pointer-events: none;
   }
 
-  .beneficios__titulo {
-    text-align: center;
-    color: var(--color-primary);
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 3rem;
+  .beneficios__container {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .beneficios__header {
+    max-width: 860px;
+  }
+
+  .beneficios__title {
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .beneficios__intro {
+    max-width: 680px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.05rem;
   }
 
   .beneficios__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
-  .beneficios__item {
-    background: var(--color-white);
-    border-radius: 8px;
-    padding: 2rem;
-    text-align: center;
-    border-top: 4px solid var(--color-accent);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  .beneficios__card {
+    background: linear-gradient(180deg, #1a1d22 0%, #111419 100%);
+    padding: 2rem 1.75rem;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition:
+      transform var(--transition-base),
+      background-color var(--transition-base),
+      border-color var(--transition-base);
   }
 
-  .beneficios__icono {
-    font-size: 2.5rem;
-    display: block;
-    margin-bottom: 1rem;
+  .beneficios__card:hover {
+    transform: translateY(-6px);
+    background: linear-gradient(180deg, #20242b 0%, #151920 100%);
+    border-color: rgba(212, 80, 10, 0.2);
   }
 
-  .beneficios__nombre {
-    color: var(--color-primary);
-    font-size: 1.1rem;
+  .beneficios__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .beneficios__number {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
     font-weight: 700;
-    margin-bottom: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
   }
 
-  .beneficios__texto {
-    color: #555;
-    font-size: 0.95rem;
-    line-height: 1.6;
+  .beneficios__icon {
+    color: var(--color-accent);
+    flex-shrink: 0;
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.6s ease;
+  .beneficios__name {
+    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--color-white);
   }
 
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .beneficios__text {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 1024px) {
+    .beneficios__grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .beneficios__card {
+      min-height: auto;
+      padding: 1.75rem 1.5rem;
+    }
   }
 
   @media (max-width: 768px) {
-    .beneficios__grid {
-      grid-template-columns: 1fr;
+    .beneficios__container {
+      gap: 2.5rem;
+    }
+
+    .beneficios__intro {
+      font-size: 1rem;
+    }
+
+    .beneficios__card {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .beneficios__name {
+      line-height: 1.05;
+      margin-bottom: 0.85rem;
+    }
+
+    .beneficios__text {
+      font-size: 0.94rem;
     }
   }
 </style>

@@ -1,0 +1,228 @@
+---
+import { Plus } from "lucide-astro";
+
+const faqs = [
+  {
+    pregunta: "¿Qué es un panel sándwich para techo?",
+    respuesta:
+      "Es un sistema prefabricado para cubiertas compuesto por caras metálicas y un núcleo aislante. Se utiliza en proyectos industriales, comerciales y agroindustriales porque combina aislamiento térmico, rapidez de instalación y buen desempeño frente a la intemperie."
+  },
+  {
+    pregunta: "¿En qué tipos de proyectos se puede usar?",
+    respuesta:
+      "Puede utilizarse en naves industriales, bodegas, centros logísticos, edificios comerciales, galpones y distintas estructuras productivas. Su elección depende del tipo de uso, las exigencias térmicas del proyecto y las condiciones de la cubierta."
+  },
+  {
+    pregunta: "¿Qué ventajas ofrece frente a una cubierta tradicional?",
+    respuesta:
+      "Aporta una instalación más ágil, mejor control térmico, una solución más limpia en obra y una envolvente más uniforme. También ayuda a reducir la complejidad constructiva al integrar cerramiento y aislamiento en una sola pieza."
+  },
+  {
+    pregunta: "¿Cómo elegir el espesor adecuado del panel?",
+    respuesta:
+      "El espesor depende del nivel de aislamiento requerido, del clima, del uso del edificio y de las condiciones del proyecto. En cubiertas industriales, esta decisión normalmente se toma según el desempeño térmico buscado y las especificaciones técnicas definidas para la obra."
+  },
+  {
+    pregunta: "¿El panel de techo ayuda a mejorar el comportamiento térmico del edificio?",
+    respuesta:
+      "Sí. Uno de sus principales beneficios es reducir la ganancia térmica a través de la cubierta y contribuir a un ambiente interior más estable. Esto resulta especialmente útil en naves, bodegas y edificios con alta exposición solar."
+  },
+  {
+    pregunta: "¿Requiere mucho mantenimiento?",
+    respuesta:
+      "No suele requerir un mantenimiento complejo cuando se instala correctamente y se especifica según el entorno de uso. Lo recomendable es realizar inspecciones periódicas, revisar fijaciones, sellos y el estado general de la cubierta para conservar su desempeño."
+  }
+];
+---
+
+<section class="faq section" id="faq">
+  <div class="faq__container container">
+    <div class="faq__header reveal">
+      <div class="section-label">Preguntas frecuentes</div>
+      <h2 class="section-title faq__title">
+        Lo que necesitas saber<br />
+        antes de especificar tu cubierta.
+      </h2>
+      <p class="section-text faq__intro">
+        Resolvemos dudas comunes sobre panel sándwich para techo, aplicaciones,
+        aislamiento térmico, instalación y criterios generales de selección para
+        proyectos industriales y comerciales.
+      </p>
+    </div>
+
+    <div class="faq__list reveal">
+      {faqs.map((item, index) => (
+        <details class="faq__item" name="faq-group">
+          <summary class="faq__question">
+            <span class="faq__question-number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            <span class="faq__question-text">{item.pregunta}</span>
+
+            <span class="faq__icon-wrap">
+              <Plus class="faq__icon" size={18} stroke-width={2} />
+            </span>
+          </summary>
+
+          <div class="faq__answer">
+            <p>{item.respuesta}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: var(--color-surface);
+  }
+
+  .faq__container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .faq__header {
+    max-width: 900px;
+  }
+
+  .faq__title {
+    margin-bottom: 1.25rem;
+  }
+
+  .faq__intro {
+    max-width: 760px;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--color-border);
+    background: transparent;
+    transition: background-color var(--transition-base);
+  }
+
+  .faq__item[open] {
+    background: #faf8f3;
+  }
+
+  .faq__question {
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.35rem 0;
+    cursor: pointer;
+  }
+
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__question-number {
+    min-width: 2.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .faq__question-text {
+    font-family: var(--font-heading);
+    font-size: clamp(1.05rem, 2vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .faq__icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-white);
+    transition:
+      border-color var(--transition-base),
+      background-color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .faq__icon {
+    color: var(--color-accent);
+    transition: transform var(--transition-base);
+  }
+
+  .faq__item:hover .faq__icon-wrap {
+    border-color: rgba(212, 80, 10, 0.3);
+  }
+
+  .faq__item[open] .faq__icon-wrap {
+    background: rgba(212, 80, 10, 0.08);
+    border-color: rgba(212, 80, 10, 0.25);
+  }
+
+  .faq__item[open] .faq__icon {
+    transform: rotate(45deg);
+  }
+
+  .faq__answer {
+    padding: 0 0 1.5rem 3.5rem;
+    max-width: 860px;
+  }
+
+  .faq__answer p {
+    color: var(--color-text-soft);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .faq__container {
+      gap: 2rem;
+    }
+
+    .faq__question {
+      grid-template-columns: auto 1fr auto;
+      gap: 0.75rem;
+      padding: 1.1rem 0;
+    }
+
+    .faq__question-number {
+      min-width: 2rem;
+      font-size: 0.68rem;
+    }
+
+    .faq__question-text {
+      font-size: 1rem;
+      line-height: 1.15;
+    }
+
+    .faq__icon-wrap {
+      width: 2.1rem;
+      height: 2.1rem;
+    }
+
+    .faq__answer {
+      padding: 0 0 1.25rem 0;
+    }
+
+    .faq__answer p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+  }
+</style>

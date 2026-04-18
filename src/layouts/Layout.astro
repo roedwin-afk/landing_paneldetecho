@@ -91,14 +91,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         line-height: 1.6;
         color: var(--color-text);
         background: var(--color-bg);
-        overflow-x: hidden;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
 
       main {
         width: 100%;
+        flex: 1;
       }
 
       section {
@@ -142,7 +148,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
 
       .container {
-        width: min(100% - (var(--container-padding) * 2), var(--container-width));
+        width: min(
+          100% - (var(--container-padding) * 2),
+          var(--container-width)
+        );
         margin-inline: auto;
       }
 
@@ -295,7 +304,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         }
 
         .container {
-          width: min(100% - (var(--container-padding-mobile) * 2), var(--container-width));
+          width: min(
+            100% - (var(--container-padding-mobile) * 2),
+            var(--container-width)
+          );
         }
 
         .section-title {
@@ -326,7 +338,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
               }
             });
           },
-          { threshold: 0.12 }
+          { threshold: 0.12 },
         );
 
         elements.forEach((el) => observer.observe(el));

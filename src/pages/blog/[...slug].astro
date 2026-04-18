@@ -8,9 +8,9 @@ import Footer from "../../components/Footer.astro";
 import { MOCK_POSTS } from "../../data/posts";
 
 // export async function getStaticPaths() {
-//   const response = await fetch(`${import.meta.env.WORDPRESS_API_URL}/posts?_embed&per_page=100`);;
+//   const response = await fetch(`${import.meta.env.WORDPRESS_API_URL}/posts?_embed&per_page=100`);
 //   const posts = await response.json();
-
+//
 //   return posts.map((post: any) => ({
 //     params: { slug: post.slug },
 //     props: { post },
@@ -25,36 +25,54 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props as { post: any };
+const plainExcerpt = post.excerpt.rendered.replace(/<[^>]*>/g, "").trim();
 ---
 
 <Layout
-  title={`${post.title.rendered} | Panel Para Cuarto Frío`}
-  description={post.excerpt.rendered.replace(/<[^>]*>/g, "").trim()}
+  title={`${post.title.rendered} | Panel de Techo`}
+  description={plainExcerpt}
 >
   <Navbar />
 
-  <main class="post">
-    <article class="post__container">
-      <header class="post__header">
-        <p class="post__date">
-          {new Date(post.date).toLocaleDateString("es-SV", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </p>
-        <h1 class="post__title" set:html={post.title.rendered} />
-      </header>
+  <main class="post-page">
+    <section class="post-hero">
+      <div class="post-hero__container container">
+        <div class="post-hero__content reveal">
+          <p class="post-hero__date">
+            {new Date(post.date).toLocaleDateString("es-SV", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
 
-      {post._embedded?.["wp:featuredmedia"]?.[0]?.source_url && (
-        <img
-          src={post._embedded["wp:featuredmedia"][0].source_url}
-          alt={post.title.rendered}
-          class="post__image"
-        />
-      )}
+          <h1 class="post-hero__title" set:html={post.title.rendered} />
 
-      <div class="post__content" set:html={post.content.rendered} />
+          <p class="post-hero__excerpt">{plainExcerpt}</p>
+        </div>
+      </div>
+    </section>
+
+    <article class="post-body section">
+      <div class="post-body__container container">
+        {
+          post._embedded?.["wp:featuredmedia"]?.[0]?.source_url && (
+            <div class="post-body__media reveal">
+              <img
+                src={post._embedded["wp:featuredmedia"][0].source_url}
+                alt={post.title.rendered}
+                class="post-body__image"
+              />
+            </div>
+          )
+        }
+
+        <div class="post-body__content reveal" set:html={post.content.rendered} />
+
+        <div class="post-body__footer reveal">
+          <a href="/blog/" class="post-body__back">Volver al blog</a>
+        </div>
+      </div>
     </article>
   </main>
 
@@ -62,65 +80,203 @@ const { post } = Astro.props as { post: any };
 </Layout>
 
 <style>
-  .post {
-    padding: 4rem 2rem;
-    background-color: #fff;
+  .post-page {
+    background: var(--color-bg);
   }
 
-  .post__container {
-    max-width: 850px;
-    margin: 0 auto;
+  .post-hero {
+    background: var(--color-primary);
+    position: relative;
+    overflow: hidden;
+    padding-block: 4.5rem 3rem;
   }
 
-  .post__header {
-    margin-bottom: 2rem;
-    text-align: center;
+  .post-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.02), transparent 42%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+    pointer-events: none;
   }
 
-  .post__date {
-    color: #777;
-    margin-bottom: 0.75rem;
-    font-size: 0.9rem;
+  .post-hero__container {
+    position: relative;
+    z-index: 1;
   }
 
-  .post__title {
-    font-size: 2.5rem;
-    line-height: 1.2;
-    color: var(--color-primary);
+  .post-hero__content {
+    max-width: 920px;
+  }
+
+  .post-hero__date {
     margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent);
   }
 
-  .post__image {
-    width: 100%;
-    max-height: 450px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 2rem;
+  .post-hero__title {
+    margin-bottom: 1.25rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2.7rem, 6vw, 5.2rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: var(--color-white);
   }
 
-  .post__content {
-    color: var(--color-text);
+  .post-hero__excerpt {
+    max-width: 42rem;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
     line-height: 1.8;
   }
 
-  .post__content :global(h2) {
-    margin-top: 2rem;
+  .post-body__container {
+    max-width: 900px;
+  }
+
+  .post-body__media {
+    margin-bottom: 2rem;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    background: #ece8df;
+  }
+
+  .post-body__image {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .post-body__content {
+    color: var(--color-text);
+    font-size: 1.02rem;
+    line-height: 1.85;
+  }
+
+  .post-body__content :global(h2),
+  .post-body__content :global(h3),
+  .post-body__content :global(h4) {
+    margin-top: 2.25rem;
     margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
     color: var(--color-primary);
   }
 
-  .post__content :global(p) {
-    margin-bottom: 1rem;
+  .post-body__content :global(h2) {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
   }
 
-  .post__content :global(img) {
-    border-radius: 8px;
-    margin: 1.5rem 0;
+  .post-body__content :global(h3) {
+    font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+  }
+
+  .post-body__content :global(h4) {
+    font-size: 1.15rem;
+  }
+
+  .post-body__content :global(p) {
+    margin-bottom: 1.15rem;
+    color: var(--color-text-soft);
+  }
+
+  .post-body__content :global(ul),
+  .post-body__content :global(ol) {
+    margin: 1.25rem 0 1.5rem 1.25rem;
+    color: var(--color-text-soft);
+  }
+
+  .post-body__content :global(li) {
+    margin-bottom: 0.65rem;
+    line-height: 1.8;
+  }
+
+  .post-body__content :global(strong) {
+    color: var(--color-text);
+  }
+
+  .post-body__content :global(blockquote) {
+    margin: 2rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--color-accent);
+    background: #f7f4ee;
+    color: var(--color-text);
+  }
+
+  .post-body__content :global(img) {
+    display: block;
     max-width: 100%;
+    margin: 2rem 0;
+    border: 1px solid var(--color-border);
   }
 
-  .post__content :global(a) {
+  .post-body__content :global(a) {
     color: var(--color-accent);
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+
+  .post-body__content :global(hr) {
+    margin: 2rem 0;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .post-body__footer {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .post-body__back {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    transition:
+      color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .post-body__back:hover {
+    transform: translateX(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .post-hero {
+      padding-block: 3.5rem 2.5rem;
+    }
+
+    .post-hero__excerpt {
+      font-size: 0.97rem;
+      line-height: 1.75;
+    }
+
+    .post-body__content {
+      font-size: 0.98rem;
+      line-height: 1.8;
+    }
+
+    .post-body__image {
+      max-height: 340px;
+    }
   }
 </style>

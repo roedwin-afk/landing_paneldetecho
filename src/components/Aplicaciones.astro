@@ -10,47 +10,82 @@ const aplicaciones = [
   {
     imagen: naveIndustrial,
     titulo: "Naves industriales",
-    texto: "Techos de gran superficie para plantas de manufactura y producción."
+    texto:
+      "Cubiertas para plantas de producción, manufactura y operación continua que requieren aislamiento térmico, resistencia y rápida instalación.",
+    detalles: ["Grandes claros", "Menor carga operativa", "Montaje ágil"]
   },
   {
     imagen: bodegaComercial,
     titulo: "Bodegas y logística",
-    texto: "Soluciones de techo para centros de distribución y almacenamiento."
+    texto:
+      "Soluciones para centros de distribución, almacenes y espacios logísticos que buscan eficiencia en cubierta y mejor control del ambiente interior.",
+    detalles: ["Centros de distribución", "Almacenamiento", "Uso intensivo"]
   },
   {
     imagen: edificioOficinas,
     titulo: "Edificios comerciales",
-    texto: "Aislamiento térmico y acústico para oficinas y centros comerciales."
+    texto:
+      "Aplicación en oficinas, edificios corporativos y espacios comerciales donde importan el desempeño térmico, la imagen del proyecto y la durabilidad.",
+    detalles: ["Imagen arquitectónica", "Confort interior", "Menor mantenimiento"]
   },
   {
     imagen: estructuraAgro,
     titulo: "Agroindustria",
-    texto: "Techos resistentes para galpones, silos y estructuras de campo."
+    texto:
+      "Paneles para galpones, zonas de trabajo agrícola y estructuras productivas expuestas a clima, humedad y exigencias constantes de operación.",
+    detalles: ["Ambientes exigentes", "Protección climática", "Uso productivo"]
   }
 ];
 ---
 
-<section class="aplicaciones reveal" id="aplicaciones">
-  <div class="aplicaciones__wrapper">
-    <h2 class="aplicaciones__titulo">Aplicaciones</h2>
-    <p class="aplicaciones__sub">Soluciones de techo para cada sector industrial</p>
+<section class="aplicaciones section" id="aplicaciones">
+  <div class="aplicaciones__container container">
+    <div class="aplicaciones__header reveal">
+      <div class="section-label">Aplicaciones</div>
+      <h2 class="section-title aplicaciones__title">
+        Soluciones de cubierta<br />
+        para cada tipo de proyecto.
+      </h2>
+      <p class="section-text aplicaciones__intro">
+        El panel sándwich para techo puede adaptarse a distintas necesidades de
+        obra, desde instalaciones industriales de gran escala hasta edificios
+        comerciales y estructuras productivas que exigen protección, rapidez de
+        montaje y mejor comportamiento térmico.
+      </p>
+    </div>
+
     <div class="aplicaciones__grid">
-      {aplicaciones.map((a) => (
-        <div class="aplicaciones__card">
-          <Image
-            src={a.imagen}
-            alt={a.titulo}
-            width={300}
-            height={200}
-            class="aplicaciones__img"
-            format="webp"
-            quality={80}
-          />
-          <div class="aplicaciones__info">
-            <h3 class="aplicaciones__nombre">{a.titulo}</h3>
-            <p class="aplicaciones__texto">{a.texto}</p>
+      {aplicaciones.map((aplicacion, index) => (
+        <article class="aplicaciones__card reveal">
+          <div class="aplicaciones__media">
+            <Image
+              src={aplicacion.imagen}
+              alt={aplicacion.titulo}
+              width={520}
+              height={360}
+              class="aplicaciones__img"
+              format="webp"
+              quality={82}
+            />
+
+            <div class="aplicaciones__overlay">
+              <span class="aplicaciones__number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+            </div>
           </div>
-        </div>
+
+          <div class="aplicaciones__info">
+            <h3 class="aplicaciones__name">{aplicacion.titulo}</h3>
+            <p class="aplicaciones__text">{aplicacion.texto}</p>
+
+            <ul class="aplicaciones__tags">
+              {aplicacion.detalles.map((detalle) => (
+                <li>{detalle}</li>
+              ))}
+            </ul>
+          </div>
+        </article>
       ))}
     </div>
   </div>
@@ -58,91 +93,180 @@ const aplicaciones = [
 
 <style>
   .aplicaciones {
-    padding: 5rem 2rem;
-    background-color: #F5F5F0;
+    background: var(--color-bg);
   }
 
-  .aplicaciones__wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
+  .aplicaciones__container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
   }
 
-  .aplicaciones__titulo {
-    text-align: center;
-    color: var(--color-primary);
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+  .aplicaciones__header {
+    max-width: 880px;
   }
 
-  .aplicaciones__sub {
-    text-align: center;
-    color: #777;
-    font-size: 1rem;
-    margin-bottom: 3rem;
+  .aplicaciones__title {
+    margin-bottom: 1.25rem;
+  }
+
+  .aplicaciones__intro {
+    max-width: 760px;
   }
 
   .aplicaciones__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem;
   }
 
   .aplicaciones__card {
-    background: var(--color-white);
-    border-radius: 8px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    transition: transform 0.3s ease;
+    transition:
+      transform var(--transition-base),
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
   }
 
   .aplicaciones__card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+    border-color: rgba(212, 80, 10, 0.25);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .aplicaciones__media {
+    position: relative;
+    overflow: hidden;
+    background: #ebe7df;
+  }
+
+  .aplicaciones__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(14, 16, 18, 0.02) 0%,
+      rgba(14, 16, 18, 0.18) 100%
+    );
+    pointer-events: none;
   }
 
   .aplicaciones__img {
     width: 100%;
-    height: 180px;
+    height: 280px;
     object-fit: cover;
+    transition: transform 0.45s ease;
+  }
+
+  .aplicaciones__card:hover .aplicaciones__img {
+    transform: scale(1.03);
+  }
+
+  .aplicaciones__overlay {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 2;
+  }
+
+  .aplicaciones__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.4rem 0.6rem;
+    background: rgba(14, 16, 18, 0.88);
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   .aplicaciones__info {
-    padding: 1.25rem;
+    padding: 1.5rem;
   }
 
-  .aplicaciones__nombre {
+  .aplicaciones__name {
+    margin-bottom: 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
     color: var(--color-primary);
-    font-size: 1rem;
+  }
+
+  .aplicaciones__text {
+    margin-bottom: 1rem;
+    color: var(--color-text-soft);
+    font-size: 0.98rem;
+    line-height: 1.75;
+  }
+
+  .aplicaciones__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .aplicaciones__tags li {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0.45rem 0.7rem;
+    background: #f3f1ec;
+    border: 1px solid var(--color-border);
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-soft);
   }
 
-  .aplicaciones__texto {
-    color: #555;
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.6s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .aplicaciones__grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
     }
   }
 
-  @media (max-width: 480px) {
-    .aplicaciones__grid {
-      grid-template-columns: 1fr;
+  @media (max-width: 768px) {
+    .aplicaciones__container {
+      gap: 2rem;
+    }
+
+    .aplicaciones__img {
+      height: 240px;
+    }
+
+    .aplicaciones__info {
+      padding: 1.25rem;
+    }
+
+    .aplicaciones__text {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .aplicaciones__img {
+      height: 220px;
+    }
+
+    .aplicaciones__tags {
+      gap: 0.5rem;
+    }
+
+    .aplicaciones__tags li {
+      width: 100%;
+      justify-content: center;
     }
   }
 </style>
