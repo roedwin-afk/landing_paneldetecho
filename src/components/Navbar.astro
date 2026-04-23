@@ -2,11 +2,13 @@
 import Menu from "./Menu.astro";
 import { Image } from "astro:assets";
 import logo from "../assets/logo.svg";
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <nav class="navbar">
   <div class="navbar__inner container">
-    <a href="/" class="navbar__brand" aria-label="Ir al inicio">
+    <a href={`${base}`} class="menu__link" class="navbar__brand" aria-label="Ir al inicio">
       <Image
         src={logo}
         alt="Panel sándwich para techo industrial"

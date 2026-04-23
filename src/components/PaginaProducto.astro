@@ -1,0 +1,700 @@
+---
+import { Image } from "astro:assets";
+import {
+    Check,
+    Thermometer,
+    ShieldCheck,
+    Wind,
+    Layers3,
+    Droplets,
+    Ruler,
+    Zap,
+    HardHat,
+    Truck,
+} from "lucide-astro";
+
+import panelTecho from "../assets/panel-sandwich-techo-industrial.webp";
+
+const ventajas = [
+    "Aislamiento térmico eficiente para alta radiación solar.",
+    "Juntas de estanqueidad que eliminan filtraciones.",
+    "Instalación prefabricada que reduce tiempos en un 40%.",
+    "Alta resistencia a carga de viento y granizo.",
+    "Núcleo aislante autoextinguible (PIR/PUR).",
+    "Acabados estéticos para fachadas y cubiertas.",
+];
+
+const datosRapidos = [
+    { icon: Thermometer, label: "Desempeño", value: "Aislamiento Térmico" },
+    { icon: Droplets, label: "Protección", value: "Barrera Humedad" },
+    { icon: Wind, label: "Cubierta", value: "Uso Industrial" },
+    { icon: Layers3, label: "Sistema", value: "Prefabricado" },
+    { icon: ShieldCheck, label: "Proyecto", value: "Durabilidad" },
+];
+---
+
+<section
+    class="producto section"
+    id="soluciones"
+    aria-labelledby="titulo-soluciones"
+>
+    <div class="container">
+        <div class="producto__header">
+            <span class="section-label">Soluciones de Cubierta</span>
+            <h2 id="titulo-soluciones" class="producto__title">
+                Panel Sándwich para Techo: Eficiencia e Integridad
+            </h2>
+            <p class="producto__intro">
+                Sistema constructivo avanzado que combina dos capas de acero con
+                un núcleo aislante, diseñado para optimizar el control térmico
+                en naves industriales y edificios comerciales.
+            </p>
+        </div>
+
+        <div class="producto__grid">
+            <div class="producto__media">
+                <div class="producto__image-wrap">
+                    <Image
+                        src={panelTecho}
+                        alt="Panel sándwich para techo industrial"
+                        width={760}
+                        height={560}
+                        class="producto__img"
+                    />
+                    <div class="producto__floating-card">
+                        <span class="producto__floating-label">
+                            Aplicación Principal
+                        </span>
+                        <strong class="producto__floating-value">
+                            Techos y Cubiertas
+                        </strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="producto__content">
+                <div class="producto__spec-block">
+                    <h3 class="producto__spec-title">
+                        Desempeño Técnico Superior
+                    </h3>
+                    <p class="producto__desc">
+                        Este panel no solo protege contra el clima, sino que
+                        actúa como un escudo térmico que reduce
+                        significativamente el gasto en climatización interna.
+                    </p>
+
+                    <div class="producto__data-grid">
+                        {
+                            datosRapidos.map(({ icon: Icon, label, value }) => (
+                                <div class="producto__data-card">
+                                    <Icon
+                                        class="producto__data-icon"
+                                        size={18}
+                                    />
+                                    <span class="producto__data-label">
+                                        {label}
+                                    </span>
+                                    <strong class="producto__data-val">
+                                        {value}
+                                    </strong>
+                                </div>
+                            ))
+                        }
+                    </div>
+
+                    <ul class="producto__lista">
+                        {
+                            ventajas.map((v) => (
+                                <li class="producto__item">
+                                    <Check class="producto__check" size={14} />
+                                    <span>{v}</span>
+                                </li>
+                            ))
+                        }
+                    </ul>
+
+                    <div class="producto__actions">
+                        <a
+                            href="/contacto"
+                            class="btn-primary"
+                            aria-label="Solicitar cotización de panel sándwich para techo"
+                        >
+                            Solicitar Cotización
+                        </a>
+                        <a href="#especificaciones" class="btn-ghost">
+                            Ver Ficha Técnica
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section
+    class="specs section"
+    id="especificaciones"
+    aria-labelledby="titulo-especificaciones"
+>
+    <div class="container">
+        <div class="specs__grid">
+            <div class="specs__info">
+                <span class="section-label">Ingeniería</span>
+                <h2 id="titulo-especificaciones" class="section-title">
+                    Capacidades Estructurales
+                </h2>
+                <p class="section-text">
+                    Diseñado para soportar cargas de viento y mantenimiento. El
+                    sistema de encastre machihembrado asegura un sellado
+                    perfecto.
+                </p>
+
+                <div class="specs__table">
+                    <div class="specs__row">
+                        <Ruler size={20} />
+                        <div>
+                            <span>Ancho Útil:</span>
+                            <strong>1,000 mm estándar</strong>
+                        </div>
+                    </div>
+
+                    <div class="specs__row">
+                        <Zap size={20} />
+                        <div>
+                            <span>Núcleo Aislante:</span>
+                            <strong
+                                >Poliuretano de alta densidad (PUR/PIR)</strong
+                            >
+                        </div>
+                    </div>
+
+                    <div class="specs__row">
+                        <ShieldCheck size={20} />
+                        <div>
+                            <span>Resistencia al Fuego:</span>
+                            <strong
+                                >Clase B-s2, d0 (Opcional según proyecto)</strong
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="specs__visual">
+                <div class="specs__placeholder">
+                    <div class="specs__callout">
+                        <strong>40kg/m³</strong>
+                        <span>Densidad media</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="apps section bg-dark text-white" aria-labelledby="titulo-usos">
+    <div class="container">
+        <h2 id="titulo-usos" class="section-title text-center">
+            Versatilidad de Uso
+        </h2>
+
+        <div class="apps__grid">
+            <div class="app-item">
+                <h3>Logística</h3>
+                <p>
+                    Centros de distribución que requieren temperatura
+                    controlada.
+                </p>
+            </div>
+
+            <div class="app-item">
+                <h3>Agroindustria</h3>
+                <p>Invernaderos y centros de procesamiento de alimentos.</p>
+            </div>
+
+            <div class="app-item">
+                <h3>Comercio</h3>
+                <p>
+                    Supermercados y techos de grandes superficies comerciales.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="proceso section" aria-labelledby="titulo-proceso">
+    <div class="container">
+        <div class="text-center mb-12">
+            <span class="section-label">Logística</span>
+            <h2 id="titulo-proceso" class="section-title">
+                Desde la fábrica hasta la obra
+            </h2>
+        </div>
+
+        <div class="proceso__steps">
+            <div class="step">
+                <div class="step__header">
+                    <Ruler />
+                    <span>01</span>
+                </div>
+                <h4>Planificación</h4>
+                <p>
+                    Calculamos el metraje exacto para evitar desperdicios y
+                    optimizar costos.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step__header">
+                    <Truck />
+                    <span>02</span>
+                </div>
+                <h4>Suministro</h4>
+                <p>
+                    Transporte especializado para evitar daños en las pestañas
+                    de encastre.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step__header">
+                    <HardHat />
+                    <span>03</span>
+                </div>
+                <h4>Instalación</h4>
+                <p>
+                    Fijación mecánica rápida y segura por equipos capacitados.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    .section {
+        padding: var(--section-space) 0;
+    }
+
+    .container {
+        width: 100%;
+        max-width: var(--container-width);
+        margin: 0 auto;
+        padding: 0 var(--container-padding);
+    }
+
+    .section-label {
+        display: block;
+        color: var(--color-accent);
+        font-family: var(--font-heading);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+        font-family: var(--font-heading);
+        font-size: clamp(2rem, 5vw, 3rem);
+        line-height: 1;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        margin-bottom: 1.5rem;
+    }
+
+    .section-text {
+        color: var(--color-text-soft);
+        line-height: 1.7;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-white {
+        color: white;
+    }
+
+    .mb-12 {
+        margin-bottom: 3rem;
+    }
+
+    .producto__header {
+        max-width: 760px;
+        margin-bottom: 3rem;
+    }
+
+    .producto__title {
+        font-family: var(--font-heading);
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        line-height: 1;
+        text-transform: uppercase;
+        color: var(--color-primary);
+        margin-bottom: 1.25rem;
+    }
+
+    .producto__intro {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--color-text-soft);
+        max-width: 68ch;
+    }
+
+    .producto__grid {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 3rem;
+        align-items: start;
+    }
+
+    .producto__media {
+        position: relative;
+    }
+
+    .producto__image-wrap {
+        position: relative;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-soft);
+        background: var(--color-surface);
+    }
+
+    .producto__img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+    }
+
+    .producto__floating-card {
+        position: absolute;
+        left: 1.5rem;
+        bottom: 1.5rem;
+        background: var(--color-primary);
+        padding: 1rem 1.25rem;
+        border-left: 4px solid var(--color-accent);
+        color: white;
+        border-radius: 0.4rem;
+        box-shadow: var(--shadow-soft);
+        max-width: calc(100% - 3rem);
+    }
+
+    .producto__floating-label {
+        display: block;
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.72);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.35rem;
+    }
+
+    .producto__floating-value {
+        font-family: var(--font-heading);
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        line-height: 1.1;
+    }
+
+    .producto__spec-block {
+        background: var(--color-surface);
+        padding: 2.5rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .producto__spec-title {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        color: var(--color-primary);
+        margin-bottom: 1rem;
+    }
+
+    .producto__desc {
+        color: var(--color-text-soft);
+        line-height: 1.75;
+    }
+
+    .producto__data-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.75rem;
+        margin: 2rem 0;
+    }
+
+    .producto__data-card {
+        background: var(--color-bg);
+        padding: 1rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .producto__data-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .producto__data-icon {
+        color: var(--color-accent);
+        margin-bottom: 0.5rem;
+    }
+
+    .producto__data-label {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.25rem;
+    }
+
+    .producto__data-val {
+        font-size: 0.9rem;
+        color: var(--color-primary);
+        line-height: 1.3;
+    }
+
+    .producto__lista {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2.5rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem 1rem;
+    }
+
+    .producto__item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+        color: var(--color-text-soft);
+        line-height: 1.5;
+    }
+
+    .producto__check {
+        color: var(--color-accent);
+        flex-shrink: 0;
+        margin-top: 0.2rem;
+    }
+
+    .producto__actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .specs__grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 4rem;
+        align-items: center;
+    }
+
+    .specs__table {
+        margin-top: 2.5rem;
+    }
+
+    .specs__row {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .specs__row svg {
+        color: var(--color-accent);
+        flex-shrink: 0;
+    }
+
+    .specs__row span {
+        display: block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+        margin-bottom: 0.25rem;
+    }
+
+    .specs__row strong {
+        font-size: 1.1rem;
+        color: var(--color-primary);
+        line-height: 1.4;
+    }
+
+    .specs__placeholder {
+        background: #e9e7e2;
+        min-height: 400px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: flex-end;
+        padding: 2rem;
+        overflow: hidden;
+    }
+
+    .specs__callout {
+        background: var(--color-accent);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 0.6rem;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .specs__callout strong {
+        display: block;
+        font-size: 1.8rem;
+        line-height: 1;
+        margin-bottom: 0.35rem;
+    }
+
+    .specs__callout span {
+        font-size: 0.95rem;
+    }
+
+    .bg-dark {
+        background: var(--color-primary);
+    }
+
+    .bg-dark .section-title,
+    .bg-dark .section-label,
+    .bg-dark .app-item h3,
+    .bg-dark p {
+        color: white;
+    }
+
+    .apps__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .app-item {
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        padding-left: 1.5rem;
+    }
+
+    .app-item h3 {
+        font-family: var(--font-heading);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    .app-item p {
+        color: rgba(255, 255, 255, 0.82);
+        line-height: 1.7;
+    }
+
+    .proceso__steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+        margin-top: 4rem;
+    }
+
+    .step__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid var(--color-border);
+        padding-bottom: 1rem;
+    }
+
+    .step__header svg {
+        color: var(--color-accent);
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+    }
+
+    .step__header span {
+        font-family: var(--font-heading);
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--color-border);
+        line-height: 0.8;
+    }
+
+    .step h4 {
+        font-family: var(--font-heading);
+        text-transform: uppercase;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        color: var(--color-primary);
+    }
+
+    .step p {
+        color: var(--color-text-soft);
+        line-height: 1.7;
+    }
+
+    @media (max-width: 1024px) {
+        .producto__grid,
+        .specs__grid,
+        .apps__grid,
+        .proceso__steps {
+            grid-template-columns: 1fr;
+        }
+
+        .producto__img {
+            aspect-ratio: 16 / 10;
+        }
+
+        .specs__placeholder {
+            min-height: 320px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .producto__spec-block {
+            padding: 1.5rem;
+        }
+
+        .producto__lista {
+            grid-template-columns: 1fr;
+        }
+
+        .producto__actions {
+            flex-direction: column;
+        }
+
+        .producto__floating-card {
+            position: static;
+            max-width: 100%;
+            margin-top: 1rem;
+        }
+
+        .producto__media {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .apps__grid,
+        .proceso__steps {
+            gap: 1.5rem;
+        }
+
+        .app-item {
+            padding-left: 1rem;
+        }
+
+        .step__header span {
+            font-size: 2.3rem;
+        }
+    }
+</style>

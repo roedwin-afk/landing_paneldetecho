@@ -1,11 +1,13 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
 <footer class="footer">
   <div class="footer__inner container">
     <div class="footer__links">
-      <a href="#soluciones" class="footer__link">Soluciones</a>
-      <a href="#beneficios" class="footer__link">Beneficios</a>
-      <a href="#aplicaciones" class="footer__link">Aplicaciones</a>
-      <a href="#faq" class="footer__link">FAQ</a>
-      <a href="contacto/" class="footer__link">Contacto</a>
+      <a href={`${base}producto/`} class="footer__link">Producto</a>
+      <a href={`${base}blog/`} class="footer__link">Blog</a>
+      <a href={`${base}contacto/`} class="footer__link">Contacto</a>
     </div>
 
     <p class="footer__copy">
