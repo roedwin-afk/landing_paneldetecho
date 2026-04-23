@@ -3,9 +3,8 @@ const base = import.meta.env.BASE_URL;
 ---
 
 <ul class="menu">
-  <li><a href={`${base}#soluciones`}>Soluciones</a></li>
-  <li><a href={`${base}#aplicaciones`}>Aplicaciones</a></li>
-  <li><a href={`${base}blog/`}>Blog</a></li>
+  <li><a href={`${base}#soluciones`} class="menu__link">Soluciones</a></li>
+  <li><a href={`${base}blog/`} class="menu__link">Blog</a></li>
   <li><a href={`${base}contacto/`} class="menu__cta">Cotizar proyecto</a></li>
 </ul>
 
@@ -92,35 +91,57 @@ const base = import.meta.env.BASE_URL;
 
   @media (max-width: 768px) {
     .menu {
-      width: 100%;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      gap: 0.75rem 1rem;
-    }
-
-    .menu a {
-      min-height: 36px;
-      font-size: 0.74rem;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .menu {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
+      gap: 0;
       width: 100%;
     }
 
     .menu li {
       width: 100%;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .menu a {
+    .menu li:last-child {
+      border-bottom: none;
+      margin-top: 1.5rem;
+    }
+
+    .menu__link {
       width: 100%;
+      padding: 1.2rem 0;
+      font-size: 0.9rem;
+      min-height: auto;
+    }
+
+    .menu__link::after {
+      display: none;
     }
 
     .menu__cta {
       width: 100%;
+      text-align: center;
+      padding: 1rem 1.5rem;
+      min-height: 48px;
     }
   }
 </style>
+
+<!-- <script>
+  // Cerrar el menú móvil al hacer click en cualquier enlace
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuLinks = document.querySelectorAll('.menu a');
+    const toggle = document.querySelector('.navbar__toggle');
+    const menu = document.querySelector('.navbar__menu');
+    
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768 && toggle && menu) {
+          toggle.setAttribute('aria-expanded', 'false');
+          menu.classList.remove('is-open');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+  });
+</script> -->
