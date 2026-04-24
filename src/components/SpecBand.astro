@@ -14,11 +14,13 @@ const specs = [
   { icon: ShieldCheck, text: "Alta resistencia estructural" },
   { icon: Layers, text: "Acabado arquitectónico premium" }
 ];
+
+const specsLoop = [...specs, ...specs, ...specs, ...specs];
 ---
 
 <div class="spec-band">
-  <div class="spec-band__inner">
-    {specs.map(({ icon: Icon, text }) => (
+  <div class="spec-band__track">
+    {specsLoop.map(({ icon: Icon, text }) => (
       <div class="spec-item">
         <Icon class="spec-icon" size={18} stroke-width={1.5} />
         <span class="spec-text">{text}</span>
@@ -31,19 +33,34 @@ const specs = [
   .spec-band {
     width: 100%;
     background: var(--color-accent);
-    overflow-x: auto;
+    overflow: hidden;
   }
 
-  .spec-band__inner {
+  .spec-band__track {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
-    gap: 3rem;
-    padding: 1rem var(--container-padding);
-    min-width: max-content;
+    gap: 4rem;
+    padding: 1rem 0;
+    width: max-content;
+    animation: marquee 36s linear infinite;
+  }
+
+  .spec-band__track:hover {
+    animation-play-state: paused;
+  }
+
+  /* Con 4 copias, -25% = exactamente 1 copia completa */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-25%); }
   }
 
   .spec-item {
     display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
     align-items: center;
     gap: 0.65rem;
     white-space: nowrap;
@@ -63,23 +80,23 @@ const specs = [
     color: var(--color-white);
   }
 
-  /* scroll limpio */
-  .spec-band::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  .spec-band::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.25);
-  }
-
   @media (max-width: 768px) {
-    .spec-band__inner {
-      gap: 2rem;
-      padding: 0.9rem var(--container-padding-mobile);
+    .spec-band__track {
+      gap: 3rem;
+      animation-duration: 24s;
     }
 
     .spec-text {
       font-size: 0.7rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spec-band__track {
+      animation: none;
+      overflow-x: auto;
+      width: 100%;
+      padding: 1rem var(--container-padding, 1.5rem);
     }
   }
 </style>

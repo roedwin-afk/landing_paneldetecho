@@ -14,6 +14,12 @@ import {
 } from "lucide-astro";
 
 import panelTecho from "../assets/panel-sandwich-techo-industrial.webp";
+import panelTeja from "../assets/panel_teja.webp";
+import panelCamara from "../assets/panel_camara_congelacion.webp";
+import panelLanaRoca from "../assets/panel_lana_roca.webp";
+import panelFachada from "../assets/panel_fachada.webp";
+
+import panelAglomeradoHidrofugo from "../assets/panel-aglomerado-hidrofugo.webp";
 
 const ventajas = [
     "Aislamiento térmico eficiente para alta radiación solar.",
@@ -31,13 +37,17 @@ const datosRapidos = [
     { icon: Layers3, label: "Sistema", value: "Prefabricado" },
     { icon: ShieldCheck, label: "Proyecto", value: "Durabilidad" },
 ];
+
+const galeria = [
+    { src: panelTecho, alt: "Panel sándwich para techo industrial" },
+    { src: panelTeja, alt: "Panel teja para techo" },
+    { src: panelCamara, alt: "Panel para cámara de congelación" },
+    { src: panelLanaRoca, alt: "Panel con núcleo de lana de roca" },
+    { src: panelFachada, alt: "Panel para fachada" },
+];
 ---
 
-<section
-    class="producto section"
-    id="soluciones"
-    aria-labelledby="titulo-soluciones"
->
+<section class="producto section" aria-labelledby="titulo-soluciones">
     <div class="container">
         <div class="producto__header">
             <span class="section-label">Soluciones de Cubierta</span>
@@ -55,11 +65,12 @@ const datosRapidos = [
             <div class="producto__media">
                 <div class="producto__image-wrap">
                     <Image
-                        src={panelTecho}
-                        alt="Panel sándwich para techo industrial"
+                        src={galeria[0].src}
+                        alt={galeria[0].alt}
                         width={760}
                         height={560}
                         class="producto__img"
+                        id="galeria-main"
                     />
                     <div class="producto__floating-card">
                         <span class="producto__floating-label">
@@ -69,6 +80,28 @@ const datosRapidos = [
                             Techos y Cubiertas
                         </strong>
                     </div>
+                </div>
+
+                <div class="producto__thumbs">
+                    {
+                        galeria.map((img, i) => (
+                            <button
+                                class={`producto__thumb-btn${i === 0 ? " active" : ""}`}
+                                data-src={img.src.src}
+                                data-alt={img.alt}
+                                aria-label={img.alt}
+                                type="button"
+                            >
+                                <Image
+                                    src={img.src}
+                                    alt={img.alt}
+                                    width={140}
+                                    height={100}
+                                    class="producto__thumb-img"
+                                />
+                            </button>
+                        ))
+                    }
                 </div>
             </div>
 
@@ -181,7 +214,14 @@ const datosRapidos = [
             </div>
 
             <div class="specs__visual">
-                <div class="specs__placeholder">
+                <div class="specs__main-img-wrap">
+                    <Image
+                        src={panelAglomeradoHidrofugo}
+                        alt="Panel aglomerado hidrofugo"
+                        width={400}
+                        height={300}
+                        class="specs__visual-img"
+                    />
                     <div class="specs__callout">
                         <strong>40kg/m³</strong>
                         <span>Densidad media</span>
@@ -284,7 +324,6 @@ const datosRapidos = [
         width: 100%;
         max-width: var(--container-width);
         margin: 0 auto;
-        padding: 0 var(--container-padding);
     }
 
     .section-label {
@@ -348,11 +387,13 @@ const datosRapidos = [
         display: grid;
         grid-template-columns: 1fr 1.1fr;
         gap: 3rem;
-        align-items: start;
+        align-items: stretch;
     }
 
     .producto__media {
         position: relative;
+        display: flex;
+        flex-direction: column;
     }
 
     .producto__image-wrap {
@@ -362,14 +403,15 @@ const datosRapidos = [
         border: 1px solid var(--color-border);
         box-shadow: var(--shadow-soft);
         background: var(--color-surface);
+        flex: 1; /* <-- ocupa todo el espacio restante */
     }
 
     .producto__img {
         display: block;
         width: 100%;
-        height: auto;
-        aspect-ratio: 4 / 3;
+        height: 100%; /* <-- llena el wrap */
         object-fit: cover;
+        aspect-ratio: unset;
     }
 
     .producto__floating-card {
@@ -536,20 +578,28 @@ const datosRapidos = [
         line-height: 1.4;
     }
 
-    .specs__placeholder {
-        background: #e9e7e2;
-        min-height: 400px;
+    .specs__main-img-wrap {
+        position: relative;
         border-radius: var(--radius-md);
-        display: flex;
-        align-items: flex-end;
-        padding: 2rem;
         overflow: hidden;
+        border: 1px solid var(--color-border);
+    }
+
+    .specs__visual-img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        aspect-ratio: 4 / 5;
     }
 
     .specs__callout {
+        position: absolute;
+        left: 1.25rem;
+        bottom: 1.25rem;
         background: var(--color-accent);
         color: white;
-        padding: 1.5rem;
+        padding: 1rem 1.25rem;
         border-radius: 0.6rem;
         box-shadow: var(--shadow-soft);
     }
@@ -642,6 +692,37 @@ const datosRapidos = [
         color: var(--color-text-soft);
         line-height: 1.7;
     }
+    .producto__thumbs {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .producto__thumb-btn {
+        padding: 0;
+        border: 2px solid var(--color-border);
+        border-radius: 0.5rem;
+        overflow: hidden;
+        cursor: pointer;
+        background: none;
+        transition: border-color 0.2s ease;
+    }
+
+    .producto__thumb-btn:hover {
+        border-color: var(--color-text-soft);
+    }
+
+    .producto__thumb-btn.active {
+        border-color: var(--color-accent);
+    }
+
+    .producto__thumb-img {
+        display: block;
+        width: 100%;
+        height: 80px;
+        object-fit: cover;
+    }
 
     @media (max-width: 1024px) {
         .producto__grid,
@@ -698,3 +779,18 @@ const datosRapidos = [
         }
     }
 </style>
+<script>
+    const thumbs = document.querySelectorAll<HTMLButtonElement>(
+        ".producto__thumb-btn",
+    );
+    const mainImg = document.getElementById("galeria-main") as HTMLImageElement;
+
+    thumbs.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            thumbs.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            mainImg.src = btn.dataset.src!;
+            mainImg.alt = btn.dataset.alt!;
+        });
+    });
+</script>
