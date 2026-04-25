@@ -150,7 +150,7 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
     margin: 0 0 2.2rem;
     font-size: 1rem;
     line-height: 1.85;
-    color: rgba(138, 147, 159, 0.92);
+    color: rgba(255, 255, 255, 1);
   }
 
   .hero__actions {
@@ -226,14 +226,14 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
   }
 
   .hero__visual {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    pointer-events: none;
-  }
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
 
   .hero__panel {
     position: relative;
@@ -312,7 +312,7 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
     position: absolute;
     right: 0; /* ← CAMBIADO de -5% */
     top: 50%;
-    transform: translateY(-70%); 
+    transform: translateY(-70%);
     width: min(460px, 65%); /* ← CAMBIADO de 70% a 65% */
     opacity: 0.8;
     z-index: 1;
@@ -328,15 +328,15 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
   }
 
   .hero__stats {
-    position: absolute;
-    right: 1.5rem;
-    bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    z-index: 3;
-    text-align: right;
-  }
+  position: absolute;
+  right: 1.5rem;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 3;
+  text-align: right;
+}
 
   .hero__stat-number {
     font-family: var(--font-heading);
@@ -407,93 +407,75 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
   }
 
   @media (max-width: 768px) {
-    .hero__wrapper {
-      padding-top: 3rem;
-      padding-bottom: 3rem;
-    }
-
-    .hero__title {
-      font-size: clamp(2.9rem, 14vw, 4.8rem);
-      line-height: 0.92;
-    }
-
-    .hero__sub {
-      font-size: 0.96rem;
-      line-height: 1.75;
-    }
-
-    .hero__actions {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .hero__btn {
-      width: 100%;
-    }
-
-    .hero__right {
-      min-height: 420px;
-      overflow: hidden; /* ← MANTENER */
-    }
-
-    .hero__panel {
-      width: min(290px, 72%);
-      height: 200px;
-    }
-
-    .hero__panel-top {
-      height: 70px;
-      left: 28px;
-    }
-
-    .hero__panel-face {
-      right: 28px;
-      height: 120px;
-    }
-
-    .hero__panel-side {
-      width: 28px;
-    }
-
-    .hero__panel-value {
-      font-size: 1.45rem;
-    }
-
-    .hero__image-card {
-      display: none;
-    }
-
-    .hero__stats {
-      right: 1rem;
-      bottom: 1rem;
-    }
-
-    .hero__stat-number {
-      font-size: 1.7rem;
-    }
+  .hero__right {
+    min-height: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
-  @media (max-width: 560px) {
-    .hero__eyebrow {
-      font-size: 0.66rem;
-      letter-spacing: 0.18em;
-    }
-
-    .hero__right {
-      min-height: 360px;
-      overflow: hidden; /* ← MANTENER */
-    }
-
-    .hero__panel {
-      width: min(260px, 82%);
-      height: 180px;
-    }
-
-    .hero__stats {
-      position: static;
-      margin-top: 1rem;
-      text-align: left;
-      align-items: flex-start;
-    }
+  .hero__visual {
+    position: relative;  /* ← overrides el absolute solo en móvil */
+    inset: unset;
+    width: 100%;
+    height: 220px;
   }
+
+  .hero__stats {
+    position: relative;  /* ← overrides el absolute solo en móvil */
+    inset: unset;
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem;
+    text-align: center;
+    right: unset;
+    bottom: unset;
+  }
+
+  .hero__stat-label {
+    text-align: center;
+  }
+
+  .hero__image-card {
+    display: none;
+  }
+
+  .hero__panel {
+    width: min(290px, 72%);
+    height: 200px;
+  }
+
+  .hero__panel-top {
+    height: 70px;
+    left: 28px;
+  }
+
+  .hero__panel-face {
+    right: 28px;
+    height: 120px;
+  }
+
+  .hero__panel-side {
+    width: 28px;
+  }
+
+  .hero__panel-value {
+    font-size: 1.45rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero__eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+  }
+
+  .hero__panel {
+    width: min(260px, 82%);
+    height: 180px;
+  }
+}
 </style>

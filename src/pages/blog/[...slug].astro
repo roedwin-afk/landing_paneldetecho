@@ -7,6 +7,8 @@ import Footer from "../../components/Footer.astro";
 
 import { MOCK_POSTS } from "../../data/posts";
 
+const base = import.meta.env.BASE_URL;
+
 // export async function getStaticPaths() {
 //   const response = await fetch(`${import.meta.env.WORDPRESS_API_URL}/posts?_embed&per_page=100`);
 //   const posts = await response.json();
@@ -70,7 +72,7 @@ const plainExcerpt = post.excerpt.rendered.replace(/<[^>]*>/g, "").trim();
         <div class="post-body__content reveal" set:html={post.content.rendered} />
 
         <div class="post-body__footer reveal">
-          <a href="/blog/" class="post-body__back">Volver al blog</a>
+          <a href={`${base}blog/`} class="post-body__back">Volver al blog</a>
         </div>
       </div>
     </article>

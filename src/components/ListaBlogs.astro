@@ -18,9 +18,13 @@ const blogTexto = {
   botonAnterior: "Anterior",
 };
 
-const rutaBlog = "/blog/";
-const rutaPaginas = "/blog/page/";
+const base = import.meta.env.BASE_URL;
+
+const rutaBlog = `${base}blog/`;
+const rutaPaginas = `${base}blog/page/`;
 const localeFecha = "es-MX";
+
+
 ---
 
 <main class="blog">

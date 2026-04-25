@@ -8,7 +8,11 @@ import {
   Layers3,
   Droplets,
 } from "lucide-astro";
-import panelTecho from "../assets/panel-sandwich-techo-industrial.webp";
+import panelTecho from "../assets/como-instalar-panel-sandwich-madera.webp";
+import panelTeja from "../assets/panel_teja.webp";
+import panelCamara from "../assets/panel_camara_congelacion.webp";
+import panelLanaRoca from "../assets/panel_lana_roca.webp";
+import panelFachada from "../assets/panel_fachada.webp";
 
 const ventajas = [
   "Aislamiento térmico eficiente para cubiertas expuestas a alta radiación solar.",
@@ -20,36 +24,26 @@ const ventajas = [
 ];
 
 const datos = [
-  {
-    icon: Thermometer,
-    label: "Desempeño",
-    value: "Aislamiento térmico",
-  },
-  {
-    icon: Droplets,
-    label: "Protección",
-    value: "Barrera ante humedad",
-  },
-  {
-    icon: Wind,
-    label: "Cubierta",
-    value: "Uso industrial exterior",
-  },
-  {
-    icon: Layers3,
-    label: "Sistema",
-    value: "Panel prefabricado",
-  },
-  {
-    icon: ShieldCheck,
-    label: "Proyecto",
-    value: "Durabilidad y control",
-  },
+  { icon: Thermometer, label: "Desempeño",  value: "Aislamiento térmico"    },
+  { icon: Droplets,    label: "Protección", value: "Barrera ante humedad"    },
+  { icon: Wind,        label: "Cubierta",   value: "Uso industrial exterior" },
+  { icon: Layers3,     label: "Sistema",    value: "Panel prefabricado"      },
+  { icon: ShieldCheck, label: "Proyecto",   value: "Durabilidad y control"   },
+];
+
+const galeria = [
+  { src: panelTecho,    alt: "Panel sándwich para techo industrial" },
+  { src: panelTeja,     alt: "Panel teja para techo"                },
+  { src: panelCamara,   alt: "Panel para cámara de congelación"     },
+  { src: panelLanaRoca, alt: "Panel con núcleo de lana de roca"     },
+  { src: panelFachada,  alt: "Panel para fachada"                   },
 ];
 ---
 
 <section class="producto section reveal" id="soluciones">
   <div class="producto__container container">
+
+    <!-- Encabezado -->
     <div class="producto__header">
       <div class="section-label">Sistema de cubierta</div>
       <h2 class="section-title producto__title">
@@ -65,35 +59,57 @@ const datos = [
       </p>
     </div>
 
+    <!-- FILA SUPERIOR: galería (izq) + título/desc/botones (der) -->
     <div class="producto__grid">
+
+      <!-- Galería -->
       <div class="producto__media">
         <div class="producto__image-wrap">
-          <Image
-            src={panelTecho}
-            alt="Panel sándwich para techo industrial instalado en cubierta"
+          <img
+            id="galeria-main"
+            src={galeria[0].src.src}
+            alt={galeria[0].alt}
             width={760}
             height={560}
             class="producto__img"
-            format="webp"
-            quality={85}
+            loading="eager"
           />
+          <div class="producto__floating-card">
+            <span class="producto__floating-label">Aplicación principal</span>
+            <strong class="producto__floating-value">Cubiertas industriales</strong>
+          </div>
         </div>
 
-        <div class="producto__floating-card">
-          <span class="producto__floating-label">Aplicación principal</span>
-          <strong class="producto__floating-value"
-            >Cubiertas industriales</strong
-          >
+        <div class="producto__thumbs">
+          {galeria.map((img, i) => (
+            <button
+              class={`producto__thumb-btn${i === 0 ? " active" : ""}`}
+              data-src={img.src.src}
+              data-alt={img.alt}
+              aria-label={img.alt}
+              type="button"
+            >
+              <Image
+                src={img.src}
+                alt={img.alt}
+                width={140}
+                height={100}
+                class="producto__thumb-img"
+                format="webp"
+                quality={75}
+              />
+            </button>
+          ))}
         </div>
       </div>
 
+      <!-- Texto + botones -->
       <div class="producto__content">
         <div class="producto__spec-block">
           <div class="producto__spec-top">
             <span class="producto__spec-kicker">Solución técnica</span>
             <h3 class="producto__spec-title">
-              Una cubierta más eficiente desde la instalación hasta la
-              operación.
+              Una cubierta más eficiente desde la instalación hasta la operación.
             </h3>
           </div>
 
@@ -106,46 +122,10 @@ const datos = [
             cubierta con mejor desempeño integral.
           </p>
 
-          <div class="producto__data-grid">
-            {
-              datos.map(({ icon: Icon, label, value }) => (
-                <div class="producto__data-card">
-                  <div class="producto__data-copy">
-                    <Icon
-                      class="producto__data-icon"
-                      size={18}
-                      stroke-width={1.8}
-                    />
-                    <span>{label}</span>
-                    <strong>{value}</strong>
-                  </div>
-                </div>
-              ))
-            }
-          </div>
-
-          <ul class="producto__lista">
-            {
-              ventajas.map((ventaja) => (
-                <li class="producto__item">
-                  <span class="producto__icon-wrap">
-                    <Check
-                      class="producto__check"
-                      size={16}
-                      stroke-width={2.4}
-                    />
-                  </span>
-                  <span>{ventaja}</span>
-                </li>
-              ))
-            }
-          </ul>
-
           <div class="producto__actions">
             <a href="/contacto/" class="btn-primary producto__btn">
               Solicitar cotización
             </a>
-
             <a href="#aplicaciones" class="btn-ghost producto__btn">
               Ver aplicaciones
             </a>
@@ -153,6 +133,33 @@ const datos = [
         </div>
       </div>
     </div>
+
+    <!-- FILA INFERIOR: data-grid + lista, ancho completo -->
+    <div class="producto__specs">
+      <div class="producto__data-grid">
+        {datos.map(({ icon: Icon, label, value }) => (
+          <div class="producto__data-card">
+            <div class="producto__data-copy">
+              <Icon class="producto__data-icon" size={18} stroke-width={1.8} />
+              <span>{label}</span>
+              <strong>{value}</strong>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <ul class="producto__lista">
+        {ventajas.map((ventaja) => (
+          <li class="producto__item">
+            <span class="producto__icon-wrap">
+              <Check class="producto__check" size={16} stroke-width={2.4} />
+            </span>
+            <span>{ventaja}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
   </div>
 </section>
 
@@ -164,9 +171,10 @@ const datos = [
   .producto__container {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 2.5rem;
   }
 
+  /* ── Header ── */
   .producto__header {
     max-width: 880px;
   }
@@ -180,6 +188,7 @@ const datos = [
     max-width: 760px;
   }
 
+  /* ── FILA SUPERIOR ── */
   .producto__grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
@@ -187,14 +196,15 @@ const datos = [
     align-items: start;
   }
 
+  /* ── Galería ── */
   .producto__media {
-    position: relative;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   .producto__image-wrap {
     position: relative;
-    height: 100%;
     overflow: hidden;
     background: #f3f1ec;
     border: 1px solid var(--color-border);
@@ -205,20 +215,56 @@ const datos = [
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(14, 16, 18, 0.02),
-      rgba(14, 16, 18, 0.12)
-    );
+    background: linear-gradient(180deg, rgba(14,16,18,0.02), rgba(14,16,18,0.12));
     pointer-events: none;
     z-index: 1;
   }
 
   .producto__img {
     width: 100%;
-    height: 100%;
-    min-height: 540px;
-    object-fit: fill;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.25s ease;
+  }
+
+  .producto__img.is-loading {
+    opacity: 0.6;
+  }
+
+  .producto__thumbs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+  }
+
+  .producto__thumb-btn {
+    padding: 0;
+    border: 2px solid transparent;
+    background: #f3f1ec;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+
+  .producto__thumb-btn:hover {
+    border-color: rgba(212, 80, 10, 0.5);
+  }
+
+  .producto__thumb-btn.active {
+    border-color: var(--color-accent);
+  }
+
+  .producto__thumb-img {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .producto__thumb-btn:hover .producto__thumb-img {
+    transform: scale(1.05);
   }
 
   .producto__floating-card {
@@ -232,6 +278,7 @@ const datos = [
     background: rgba(14, 16, 18, 0.94);
     border-left: 3px solid var(--color-accent);
     box-shadow: 0 18px 34px rgba(14, 16, 18, 0.18);
+    z-index: 2;
   }
 
   .producto__floating-label {
@@ -252,6 +299,7 @@ const datos = [
     line-height: 1;
   }
 
+  /* ── Contenido derecho ── */
   .producto__content {
     display: flex;
     height: 100%;
@@ -290,38 +338,52 @@ const datos = [
   }
 
   .producto__desc {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     color: var(--color-text-soft);
     line-height: 1.8;
     font-size: 1rem;
   }
 
+  .producto__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .producto__btn {
+    width: auto;
+  }
+
+  /* ── FILA INFERIOR: specs ancho completo ── */
+  .producto__specs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f3 100%);
+  }
+
   .producto__data-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 0.75rem;
-        margin: 2rem 0;
-        
-    }
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+  }
 
   .producto__data-card {
-        background: var(--color-bg);
-        padding: 1rem;
-        border: 1px solid var(--color-border);
-        border-radius: 0.75rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease;
-    }
+    background: var(--color-bg);
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .producto__data-icon {
     color: var(--color-accent);
     flex-shrink: 0;
-    margin-top: 0.1rem;
+    margin-bottom: 0.25rem;
   }
 
   .producto__data-copy {
@@ -329,7 +391,6 @@ const datos = [
     flex-direction: column;
     gap: 0.25rem;
     align-items: center;
-    justify-content: center;
     text-align: center;
   }
 
@@ -350,11 +411,13 @@ const datos = [
     font-weight: 700;
   }
 
+  /* Lista 3 columnas aprovechando el ancho completo */
   .producto__lista {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.9rem 1rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.9rem 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
   }
 
   .producto__item {
@@ -381,45 +444,33 @@ const datos = [
     color: var(--color-accent);
   }
 
-  .producto__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .producto__btn {
-    width: auto;
-  }
-
+  /* ── Responsive ── */
   @media (max-width: 1100px) {
     .producto__grid {
       grid-template-columns: 1fr;
     }
 
     .producto__data-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, 1fr);
     }
 
-    .producto__img {
-      min-height: 440px;
+    .producto__lista {
+      grid-template-columns: 1fr 1fr;
     }
   }
 
   @media (max-width: 768px) {
     .producto__container {
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
-    .producto__spec-block {
-      padding: 1.5rem;
+    .producto__spec-block,
+    .producto__specs {
+      padding: 1.25rem;
     }
 
     .producto__data-grid {
       grid-template-columns: 1fr 1fr;
-    }
-    .producto__data-card {
-      text-align: center;
-      display: grid;
     }
 
     .producto__lista {
@@ -435,20 +486,41 @@ const datos = [
       width: 100%;
     }
 
-    .producto__img {
-      min-height: 320px;
-    }
-
     .producto__floating-card {
       left: 1rem;
-      right: 1rem;
       bottom: 1rem;
+    }
+
+    .producto__thumb-img {
+      height: 54px;
     }
   }
 
   @media (max-width: 560px) {
     .producto__data-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
     }
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const thumbs = document.querySelectorAll<HTMLButtonElement>(".producto__thumb-btn");
+    const mainImg = document.getElementById("galeria-main") as HTMLImageElement;
+
+    if (!mainImg) return;
+
+    thumbs.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        thumbs.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        mainImg.classList.add("is-loading");
+        mainImg.src = btn.dataset.src!;
+        mainImg.alt = btn.dataset.alt!;
+
+        mainImg.onload = () => mainImg.classList.remove("is-loading");
+      });
+    });
+  });
+</script>
