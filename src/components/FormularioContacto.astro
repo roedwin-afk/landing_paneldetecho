@@ -1,6 +1,5 @@
 ---
 import { Mail, Phone, MapPin } from "lucide-astro";
-import "leaflet/dist/leaflet.css";
 ---
 
 <section class="contact section" id="formulario">
@@ -51,7 +50,8 @@ import "leaflet/dist/leaflet.css";
           id="contact-leaflet-map"
           class="contact__map-canvas"
           aria-label="Ubicación en mapa"
-        ></div>
+        >
+        </div>
       </div>
     </div>
 
@@ -131,13 +131,10 @@ import "leaflet/dist/leaflet.css";
           id="MultiLine"
           rows="6"
           placeholder="Cuéntanos el tipo de proyecto, ubicación, dimensiones aproximadas y lo que necesitas."
-          required
-        ></textarea>
+          required></textarea>
       </div>
 
-      <button type="submit" class="contact__submit">
-        Enviar solicitud
-      </button>
+      <button type="submit" class="contact__submit"> Enviar solicitud </button>
     </form>
   </div>
 </section>
@@ -149,39 +146,66 @@ import "leaflet/dist/leaflet.css";
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 
 <script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
+  function initMap() {
     const mapContainer = document.getElementById("contact-leaflet-map");
-    if (!mapContainer || typeof window === "undefined" || !window.L) return;
+    if (!mapContainer || !window.L) return;
+    if (mapContainer._leaflet_id) return;
+
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+    const map = window.L.map("contact-leaflet-map", {
+      zoomControl: false,
+      scrollWheelZoom: false,
+      dragging: !isTouchDevice,
+      tap: false,
+    }).setView([19.4326, -99.1946], 16);
+
+    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors",
+      maxZoom: 19,
+    }).addTo(map);
 
     const customIcon = window.L.icon({
-      iconUrl:
-        "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png",
-      shadowUrl:
-        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+      iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png",
+      shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
       iconSize: [25, 41],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
       shadowSize: [41, 41],
     });
 
-    const lat = 19.4326;
-    const lng = -99.1946;
-
-    const map = window.L.map("contact-leaflet-map").setView([lat, lng], 16);
-
-    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors",
-    }).addTo(map);
-
-    window.L.marker([lat, lng], { icon: customIcon })
+    window.L.marker([19.4326, -99.1946], { icon: customIcon })
       .addTo(map)
       .bindPopup("Masaryk 61, Int. 901, Polanco V, 11560, CDMX")
       .openPopup();
 
-    setTimeout(() => {
-      map.invalidateSize();
-    }, 200);
-  });
+    if (isTouchDevice) {
+      const overlay = document.createElement("div");
+      overlay.className = "map-touch-overlay";
+      overlay.innerHTML = `<span>Usa dos dedos para mover el mapa</span>`;
+      mapContainer.style.position = "relative";
+      mapContainer.appendChild(overlay);
+      mapContainer.addEventListener("touchstart", () => {
+        overlay.classList.add("is-hidden");
+        map.dragging.enable();
+      }, { once: true });
+    }
+
+    // Doble invalidateSize: uno inmediato y otro diferido por si el layout aún está pintando
+    map.invalidateSize();
+    setTimeout(() => map.invalidateSize(), 300);
+  }
+
+  function waitForLeaflet(attempts) {
+    if (attempts <= 0) return;
+    if (window.L) {
+      initMap();
+    } else {
+      setTimeout(() => waitForLeaflet(attempts - 1), 150);
+    }
+  }
+
+  document.addEventListener("astro:page-load", () => waitForLeaflet(20));
 </script>
 
 <style>
@@ -259,6 +283,34 @@ import "leaflet/dist/leaflet.css";
     overflow: hidden;
     border: 1px solid var(--color-border);
     background: #f3f1ec;
+  }
+  .map-touch-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .map-touch-overlay span {
+    font-family: var(--font-heading);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.45rem 1rem;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .map-touch-overlay.is-hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .contact__form {

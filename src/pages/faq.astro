@@ -1,0 +1,435 @@
+---
+// src/pages/faq.astro
+import Layout from "../layouts/Layout.astro";
+import CTA from "../components/CTA.astro";
+import { Plus } from "lucide-astro";
+
+const faqs = [
+  {
+    pregunta: "¿Qué es un panel sándwich de techo y para qué sirve?",
+    respuesta:
+      "Un panel sándwich de techo es un elemento prefabricado de cubierta compuesto por dos caras metálicas de acero galvanizado y un núcleo aislante intermedio (PUR, PIR o lana de roca). Integra en una sola pieza el cerramiento, el aislamiento térmico y el acabado estético, lo que reduce tiempos de montaje hasta un 40 % frente a una cubierta tradicional. Se utiliza en naves industriales, bodegas, centros logísticos, edificios comerciales y agroindustriales en México y toda la República Mexicana.",
+  },
+  {
+    pregunta: "¿Cuáles son los tipos de núcleo aislante disponibles: PUR, PIR o lana de roca?",
+    respuesta:
+      "Los tres núcleos tienen aplicaciones distintas. El PUR (poliuretano) ofrece la mayor eficiencia térmica por milímetro, con conductividad λ ≈ 0.022 W/m·K, ideal para bodegas y naves con control de temperatura. El PIR (poliisocianurato) mejora la reacción al fuego respecto al PUR y alcanza clase Euroclass D-s2, recomendado cuando se exige mayor resistencia al fuego. La lana de roca (mineral wool) es no combustible (Euroclass A2-s1), la opción correcta para plantas farmacéuticas, hospitales y proyectos con requisitos estrictos de seguridad contra incendio bajo normas NFPA 285 o equivalentes aplicables en México.",
+  },
+  {
+    pregunta: "¿Qué espesor de panel de techo necesito para una nave industrial en México?",
+    respuesta:
+      "En México, con temperaturas exteriores que van de 28–42 °C en el Bajío y el norte árido, y alta irradiación solar, una nave industrial sin climatización activa suele especificarse con panel de 60–80 mm de PUR para mantener una temperatura interior razonable. Si el edificio tiene sistema de aire acondicionado o se requiere control térmico estricto, el espesor sube a 100–120 mm. Para cuartos fríos o cámaras de congelación el mínimo es 120–200 mm según la temperatura de operación (-18 °C a -25 °C). El espesor correcto se calcula evaluando la transmitancia térmica (valor U) requerida para el proyecto.",
+  },
+  {
+    pregunta: "¿Cuánto pesa un panel sándwich de techo y cómo afecta el cálculo estructural?",
+    respuesta:
+      "El peso típico de un panel sándwich de techo varía entre 8 y 16 kg/m² dependiendo del espesor del núcleo (50–200 mm) y del grosor de las caras metálicas (0.4–0.7 mm). Es significativamente más ligero que una losa de concreto (200–300 kg/m²) o una cubierta de teja (40–60 kg/m²), lo que reduce las cargas muertas sobre la estructura metálica o de concreto y puede traducirse en perfiles más delgados y menor costo estructural. Para el cálculo sismo-resistente en zonas sísmicas de México (zona C y D según el Manual de Diseño por Sismo de la CDMX o el MDOC-CFE), esta ventaja de peso es relevante.",
+  },
+  {
+    pregunta: "¿Cuál es la resistencia al fuego del panel sándwich de techo?",
+    respuesta:
+      "La resistencia al fuego depende directamente del tipo de núcleo. Los paneles con núcleo de lana de roca mineral alcanzan clasificación REI-60 o superior (60 minutos de resistencia al fuego) según ensayos EN 13501-2, y reacción al fuego Euroclass A2-s1, d0 (no combustible). Los paneles PIR clasifican típicamente Euroclass D o E y ofrecen resistencia EI-30 en configuraciones específicas. Para proyectos con requerimientos NFPA en México, es indispensable solicitar los certificados del fabricante que acrediten el sistema completo (panel + substructura) bajo las normas del proyecto.",
+  },
+  {
+    pregunta: "¿El panel sándwich de techo es apto para cámaras frigoríficas o cuartos fríos?",
+    respuesta:
+      "Sí. El panel de techo con núcleo de PUR de alta densidad (≥ 40 kg/m³) es el sistema más utilizado en cámaras frigoríficas y cuartos fríos industriales. Para aplicaciones de refrigeración positiva (+4 °C) se especifica típicamente 80–100 mm; para congelación (-18 °C) se requieren 120–150 mm; y para congelación profunda (-25 °C a -40 °C), 150–200 mm o más. Las caras interiores deben ser de acero inoxidable o con recubrimiento apto para uso alimentario si el proyecto lo requiere. Consulta con nuestros técnicos para definir el detalle de juntas y barreras de vapor adecuado para tu proyecto en México.",
+  },
+  {
+    pregunta: "¿Qué vida útil tiene un panel sándwich de techo en el clima de México?",
+    respuesta:
+      "Con mantenimiento adecuado, un panel sándwich de techo con caras de acero galvanizado y prepintado (recubrimiento PVDF o poliéster de alta durabilidad) tiene una vida útil de 25–40 años en el clima mexicano. El factor crítico es la protección anticorrosiva: se recomienda acero con capa de galvanizado ≥ 275 g/m² (Z275 según EN 10346) y recubrimiento orgánico de 25–35 µm en zonas costeras o de alta humedad como el Golfo de México, el Pacífico sur y las costas de Veracruz o Yucatán. Las inspecciones anuales de juntas, fijaciones y selladores prolongan significativamente la vida del sistema.",
+  },
+  {
+    pregunta: "¿Cuánto tiempo tarda la instalación de panel sándwich de techo frente a una cubierta convencional?",
+    respuesta:
+      "La instalación de panel sándwich es entre 2 y 4 veces más rápida que una cubierta de lámina + aislante por capas separadas. Un equipo experimentado de 4–6 personas puede montar entre 300 y 600 m² diarios dependiendo de la geometría de la cubierta y las condiciones de acceso. Al integrar cerramiento y aislamiento en una sola pieza se eliminan gremios intermedios, se reduce el desperdicio de material en obra y se acorta el plazo de entrega del proyecto. Esta velocidad de montaje es especialmente valiosa en proyectos de expansión industrial con fechas de operación comprometidas.",
+  },
+  {
+    pregunta: "¿Qué normas y certificaciones debe cumplir el panel de techo para proyectos en México?",
+    respuesta:
+      "Los proyectos en México suelen referenciar normas internacionales como EN 14509 (paneles autoportantes de cubierta y fachada), EN 13501-1 y EN 13501-2 (reacción y resistencia al fuego), y NFPA 285 para proyectos con requisitos estadounidenses. Para sismo-resistencia en zonas de alta intensidad sísmica (México, especialmente zona sísmica D según el RCDF), la estructura soporte debe cumplir los reglamentos locales; el panel en sí debe garantizar la compatibilidad de deformaciones. Exige siempre al proveedor los certificados de ensayo del lote, las fichas técnicas de producto y, cuando sea aplicable, la declaración de prestaciones (DoP) o un informe de evaluación técnica equivalente.",
+  },
+  {
+    pregunta: "¿Cómo solicito una cotización o asesoría técnica para mi proyecto en México?",
+    respuesta:
+      "Para obtener una cotización precisa de panel sándwich de techo en México necesitamos: área total de cubierta (m²), tipo de uso del edificio (nave industrial, bodega, cuarto frío, etc.), geometría de la cubierta (pendiente, luces entre apoyos), y ubicación del proyecto. Puedes contactarnos a través del formulario en nuestra página de contacto o directamente desde la sección Cotizar proyecto en el menú. Nuestro equipo técnico analiza cada proyecto y proporciona una especificación detallada con espesor recomendado, tipo de núcleo y detalles de instalación sin costo.",
+  },
+];
+
+// JSON-LD FAQPage schema — GEO / Google rich results
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.pregunta,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.respuesta,
+    },
+  })),
+};
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout
+  title="Preguntas Frecuentes — Panel Sándwich de Techo | México"
+  description="Resolvemos tus dudas técnicas sobre panel sándwich para techo: espesores, núcleos aislantes, resistencia al fuego, vida útil e instalación en México."
+>
+  <!-- JSON-LD inline — Layout no expone slot head -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+  <section class="faq-hero">
+    <div class="faq-hero__inner container">
+      <div class="faq-hero__content reveal">
+        <div class="section-label">Centro de conocimiento</div>
+        <h1 class="faq-hero__title">
+          Preguntas<br />
+          <span>frecuentes</span>
+        </h1>
+        <p class="faq-hero__sub">
+          Todo lo que necesitas saber sobre panel sándwich de techo antes de
+          especificar tu próximo proyecto industrial o comercial
+          en México.
+        </p>
+      </div>
+
+      <div class="faq-hero__stats reveal">
+        <div class="faq-hero__stat">
+          <span class="faq-hero__stat-num">10</span>
+          <span class="faq-hero__stat-label">Respuestas técnicas</span>
+        </div>
+        <div class="faq-hero__stat">
+          <span class="faq-hero__stat-num">PUR·PIR·MW</span>
+          <span class="faq-hero__stat-label">Núcleos disponibles</span>
+        </div>
+        <div class="faq-hero__stat">
+          <span class="faq-hero__stat-num">40+</span>
+          <span class="faq-hero__stat-label">Años de experiencia</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ Accordion ──────────────────────────────────────────────────────── -->
+  <section class="faq-section section">
+    <div class="faq-section__inner container">
+
+      <div class="faq__list reveal">
+        {faqs.map((item, index) => (
+          <details class="faq__item" name="faq-group">
+            <summary class="faq__question">
+              <span class="faq__question-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="faq__question-text">{item.pregunta}</span>
+              <span class="faq__icon-wrap">
+                <Plus class="faq__icon" size={18} stroke-width={2} />
+              </span>
+            </summary>
+            <div class="faq__answer">
+              <p>{item.respuesta}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <!-- CTA suave inline -->
+      <div class="faq-cta reveal">
+        <p class="faq-cta__text">
+          ¿No encontraste lo que buscabas? Nuestro equipo técnico está
+          disponible para resolver cualquier consulta específica de tu proyecto.
+        </p>
+        <a href=`${base}contacto/` class="btn-primary faq-cta__btn">
+          Hablar con un especialista
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <CTA />
+</Layout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────────────────────── */
+  .faq-hero {
+    background: linear-gradient(90deg, #05080c 0%, #0a0f15 55%, #0c1118 100%);
+    padding-top: 5rem;
+    padding-bottom: 4rem;
+    border-bottom: 3px solid var(--color-accent);
+    overflow: hidden;
+  }
+
+  .faq-hero__inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: end;
+  }
+
+  .faq-hero__content {
+    max-width: 640px;
+  }
+
+  /* Override section-label color for dark background */
+  .faq-hero .section-label {
+    color: var(--color-accent);
+  }
+
+  .faq-hero__title {
+    font-family: var(--font-heading);
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--color-white);
+    margin-bottom: 1.75rem;
+  }
+
+  .faq-hero__title span {
+    color: var(--color-accent);
+  }
+
+  .faq-hero__sub {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.62);
+    max-width: 520px;
+  }
+
+  /* Stats strip */
+  .faq-hero__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 2.5rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .faq-hero__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .faq-hero__stat-num {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--color-white);
+    line-height: 1;
+  }
+
+  .faq-hero__stat-label {
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  /* ── FAQ Section ──────────────────────────────────────────────────────────── */
+  .faq-section {
+    background: var(--color-surface);
+  }
+
+  .faq-section__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  /* ── Accordion (matches existing FAQ.astro styles) ────────────────────────── */
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--color-border);
+    background: transparent;
+    transition: background-color var(--transition-base);
+  }
+
+  .faq__item[open] {
+    background: #faf8f3;
+  }
+
+  .faq__question {
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.35rem 0;
+    cursor: pointer;
+  }
+
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__question-number {
+    min-width: 2.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .faq__question-text {
+    font-family: var(--font-heading);
+    font-size: clamp(1.05rem, 2vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .faq__icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-white);
+    transition:
+      border-color var(--transition-base),
+      background-color var(--transition-base);
+  }
+
+  .faq__icon {
+    color: var(--color-accent);
+    transition: transform var(--transition-base);
+  }
+
+  .faq__item:hover .faq__icon-wrap {
+    border-color: rgba(212, 80, 10, 0.3);
+  }
+
+  .faq__item[open] .faq__icon-wrap {
+    background: rgba(212, 80, 10, 0.08);
+    border-color: rgba(212, 80, 10, 0.25);
+  }
+
+  .faq__item[open] .faq__icon {
+    transform: rotate(45deg);
+  }
+
+  .faq__answer {
+    padding: 0 0 1.5rem 3.5rem;
+    max-width: 860px;
+  }
+
+  .faq__answer p {
+    color: var(--color-text-soft);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  /* ── CTA inline ───────────────────────────────────────────────────────────── */
+  .faq-cta {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 2.5rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+
+  .faq-cta__text {
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text-soft);
+  }
+
+  .faq-cta__btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── Responsive ───────────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .faq-hero__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-hero__stats {
+      flex-direction: row;
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-left: 0;
+      padding-top: 2rem;
+      gap: 2.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .faq-hero {
+      padding-top: 3.5rem;
+      padding-bottom: 3rem;
+    }
+
+    .faq-hero__stats {
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .faq__question {
+      grid-template-columns: auto 1fr auto;
+      gap: 0.75rem;
+      padding: 1.1rem 0;
+    }
+
+    .faq__question-number {
+      min-width: 2rem;
+      font-size: 0.68rem;
+    }
+
+    .faq__question-text {
+      font-size: 1rem;
+      line-height: 1.15;
+    }
+
+    .faq__icon-wrap {
+      width: 2.1rem;
+      height: 2.1rem;
+    }
+
+    .faq__answer {
+      padding: 0 0 1.25rem 0;
+    }
+
+    .faq__answer p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    .faq-cta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 1.75rem;
+    }
+
+    .faq-cta__btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
