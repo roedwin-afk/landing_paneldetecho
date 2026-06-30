@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-sol.webp";
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <section class="hero">
@@ -26,7 +28,7 @@ import heroPanelTecho from "../assets/proteccion-contra-la-energia-termica-del-s
           Ver especificaciones
         </a>
 
-        <a href="/contacto/" class="hero__btn hero__btn--ghost">
+        <a href=`${base}contacto/` class="hero__btn hero__btn--ghost">
           Solicitar cotización
         </a>
       </div>
