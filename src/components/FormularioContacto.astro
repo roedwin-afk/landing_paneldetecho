@@ -191,9 +191,10 @@ import { Mail, Phone, MapPin } from "lucide-astro";
       }, { once: true });
     }
 
-    // Doble invalidateSize: uno inmediato y otro diferido por si el layout aún está pintando
-    map.invalidateSize();
-    setTimeout(() => map.invalidateSize(), 300);
+    // ✅ invalidateSize una vez que el DOM ya está estable
+    requestAnimationFrame(() => {
+      map.invalidateSize();
+    });
   }
 
   function waitForLeaflet(attempts) {
@@ -205,7 +206,25 @@ import { Mail, Phone, MapPin } from "lucide-astro";
     }
   }
 
-  document.addEventListener("astro:page-load", () => waitForLeaflet(20));
+  function setupObserver() {
+    const mapContainer = document.getElementById("contact-leaflet-map");
+    if (!mapContainer) return;
+
+    // ✅ Espera a que el contenedor sea visible antes de inicializar
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          observer.disconnect();
+          waitForLeaflet(20);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(mapContainer);
+  }
+
+  document.addEventListener("DOMContentLoaded", setupObserver);
+  document.addEventListener("astro:page-load", setupObserver);
 </script>
 
 <style>
